@@ -95,7 +95,8 @@ class CocktailService {
           .get(Endpoints.getIngridients);
 
       if (response.statusCode == 200) {
-        IngridientsResponse glassResponse = IngridientsResponse.fromJson(response.data);
+        IngridientsResponse glassResponse =
+            IngridientsResponse.fromJson(response.data);
 
         return glassResponse;
       } else {
@@ -111,27 +112,31 @@ class CocktailService {
       var response = await BaseClient.getClient(Endpoints.baseUrl)
           .get(Endpoints.getRandomCocktail);
 
-      if (response.statusCode == 200) {
-        FullCocktailResponse fullCocktailResponse = FullCocktailResponse.fromJson(response.data);
+      print("Response : ${response.data}");
 
+      if (response.statusCode == 200) {
+        FullCocktailResponse fullCocktailResponse =
+            FullCocktailResponse.fromJson(response.data);
+        print('Cocktail Response : ${fullCocktailResponse.toJson()}');
         return fullCocktailResponse;
       } else {
+        print('Failure : ${response.statusMessage}');
         return Failure(response.statusMessage);
       }
     } catch (e) {
+      print('Failure : ${e}');
       return Failure('$e');
     }
   }
 
   getCocktailDetails(String id) async {
-      try {
+    try {
       var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getCocktailDetails, queryParameters: {
-            'i' : id
-          });
+          .get(Endpoints.getCocktailDetails, queryParameters: {'i': id});
 
       if (response.statusCode == 200) {
-        FullCocktailResponse fullCocktailResponse = FullCocktailResponse.fromJson(response.data);
+        FullCocktailResponse fullCocktailResponse =
+            FullCocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
@@ -143,14 +148,13 @@ class CocktailService {
   }
 
   getCocktailsByGlass(String glass) async {
-     try {
+    try {
       var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.filterCocktail, queryParameters: {
-            'g' : glass
-          });
+          .get(Endpoints.filterCocktail, queryParameters: {'g': glass});
 
       if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse = CocktailResponse.fromJson(response.data);
+        CocktailResponse fullCocktailResponse =
+            CocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
@@ -162,14 +166,13 @@ class CocktailService {
   }
 
   getCocktailsByCategory(String category) async {
-      try {
+    try {
       var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.filterCocktail, queryParameters: {
-            'c' : category
-          });
+          .get(Endpoints.filterCocktail, queryParameters: {'c': category});
 
       if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse = CocktailResponse.fromJson(response.data);
+        CocktailResponse fullCocktailResponse =
+            CocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
@@ -181,14 +184,13 @@ class CocktailService {
   }
 
   getCocktailsByIngredient(String ingridient) async {
-     try {
+    try {
       var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.filterCocktail, queryParameters: {
-            'i' : ingridient
-          });
+          .get(Endpoints.filterCocktail, queryParameters: {'i': ingridient});
 
       if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse = CocktailResponse.fromJson(response.data);
+        CocktailResponse fullCocktailResponse =
+            CocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
