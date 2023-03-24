@@ -1,9 +1,9 @@
-import 'package:cocktalez/app/components/regular_text.dart';
+
 import 'package:cocktalez/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'flat_button.dart';
+
 
 Widget customErrorWidget(VoidCallback onRefresh, {BuildContext? context}) {
   return Stack(
@@ -25,21 +25,25 @@ Widget customErrorWidget(VoidCallback onRefresh, {BuildContext? context}) {
           SizedBox(
             height: 20.h,
           ),
-          regularText('Oh Snap!', fontSize: 24.sp, fontWeight: FontWeight.bold),
+          Text('Oh Snap!', style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h),
-            child: regularText(
+            child: Text(
                 'Looks like something broke here. We\'ll work on fixing things so please try again later. ',
-                fontSize: 16.sp,
-                textAlign: TextAlign.center),
+                 textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16.sp,
+               ),),
           ),
           const Spacer(),
           Container(
             height: 54.h,
             margin: const EdgeInsets.all(15),
-            child: flatButton('Retry', () {
-              onRefresh();
-            }),
+            child: ElevatedButton(
+              onPressed: () { 
+                 onRefresh();
+               },
+              child: const Text('Retry'),
+            ),
           )
         ],
       ),

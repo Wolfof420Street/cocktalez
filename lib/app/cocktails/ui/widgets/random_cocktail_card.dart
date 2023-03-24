@@ -1,5 +1,4 @@
 import 'package:cocktalez/app/cocktails/data/model/cocktail.dart';
-import 'package:cocktalez/app/components/regular_text.dart';
 import 'package:cocktalez/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ Widget randomCocktailCard(CocktailObject cocktailObject, BuildContext ctx) {
           color: Colors.grey.withOpacity(0.5),
           spreadRadius: 5,
           blurRadius: 7,
-          offset: const Offset(0, 3), // changes position of shadow
+          offset: const Offset(0, 3),
         ),
       ],
       image: DecorationImage(
@@ -25,30 +24,44 @@ Widget randomCocktailCard(CocktailObject cocktailObject, BuildContext ctx) {
         fit: BoxFit.cover,
       ),
     ),
-    child: Transform(
-      transform: Matrix4.rotationX(0.1),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.transparent, Colors.black54],
+    child: Stack(
+      children: [
+        Transform(
+          transform: Matrix4.rotationX(0.1),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.transparent, Colors.black54],
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(cocktailObject.strDrink,
+                      style: const TextStyle(color: AppColors.accent, fontSize: 30)),
+                  const SizedBox(height: 5),
+                ],
+              ),
+            ),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              regularText(cocktailObject.strDrink,
-                  color: AppColors.secondary, fontSize: 30),
-              const SizedBox(height: 5),
-            ],
+        Positioned(
+          top: 8,
+          right: 8,
+          child: IconButton(
+            onPressed: () {
+              // Handle search action here
+            },
+            icon: Icon(Icons.search, color: Theme.of(ctx).iconTheme.color),
           ),
         ),
-      ),
+      ],
     ),
   );
 }

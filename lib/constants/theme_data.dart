@@ -12,15 +12,15 @@ class AppTheme {
     cardTheme: const CardTheme(
       color: AppColors.cardLight,
     ),
-    appBarTheme:  AppBarTheme(
+    appBarTheme: AppBarTheme(
       color: AppColors.backgroundLight,
       iconTheme: const IconThemeData(
         color: AppColors.textLight,
       ),
       titleTextStyle: GoogleFonts.openSans(
         color: AppColors.textLight,
-          fontWeight: FontWeight.w600,
-          fontSize: 20.0,
+        fontWeight: FontWeight.w600,
+        fontSize: 20.0,
       ),
       systemOverlayStyle: SystemUiOverlayStyle.dark,
     ),
@@ -42,7 +42,6 @@ class AppTheme {
       unselectedLabelStyle: const TextStyle(
         fontSize: 16.0,
       ),
-    
     ),
     primaryTextTheme: TextTheme(
       displayLarge: const TextStyle(
@@ -89,12 +88,10 @@ class AppTheme {
       iconTheme: IconThemeData(
         color: AppColors.textDark,
       ),
-      textTheme: TextTheme(
-        headline6: TextStyle(
-          color: AppColors.textDark,
-          fontWeight: FontWeight.w600,
-          fontSize: 20.0,
-        ),
+      titleTextStyle: TextStyle(
+        color: AppColors.textDark,
+        fontWeight: FontWeight.w600,
+        fontSize: 20.0,
       ),
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
@@ -148,6 +145,4 @@ class AppTheme {
       ),
     ),
   );
-
-
 }

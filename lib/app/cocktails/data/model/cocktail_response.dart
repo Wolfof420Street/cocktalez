@@ -9,9 +9,9 @@ class CocktailResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['drinks'] = drinks.map((e)=>e.toJson()).toList();
-    return _data;
+    final data = <String, dynamic>{};
+    data['drinks'] = drinks.map((e)=>e.toJson()).toList();
+    return data;
   }
 }
 
@@ -32,10 +32,10 @@ class Drinks {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['strDrink'] = strDrink;
-    _data['strDrinkThumb'] = strDrinkThumb;
-    _data['idDrink'] = idDrink;
-    return _data;
+    final data = <String, dynamic>{};
+    data['strDrink'] = strDrink;
+    data['strDrinkThumb'] = strDrinkThumb;
+    data['idDrink'] = idDrink;
+    return data;
   }
 }

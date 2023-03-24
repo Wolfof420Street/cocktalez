@@ -18,4 +18,7 @@ class Endpoints {
   static String getRandomCocktail = '/random.php';
 
   static String filterCocktail = '/filter.php';
+
+  static String search = '/search.php';
+
 }

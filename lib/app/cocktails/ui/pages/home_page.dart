@@ -1,6 +1,7 @@
 import 'package:cocktalez/app/cocktails/ui/pages/categories_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/cocktails_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/glasses_page.dart';
+import 'package:cocktalez/app/ingridients/ui/pages/ingredients_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -22,14 +23,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> _buildScreens() {
-    return [const GlassesPage(), const CocktailsPage(), const CategoriesPage()];
+    return [const IngridientsPage(), const CocktailsPage(), const CategoriesPage()];
   }
 
   List<PersistentBottomNavBarItem> _navBarItems() {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.local_drink),
-        title: ("Mocktails"),
+        title: ("Ingridients"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),

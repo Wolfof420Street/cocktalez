@@ -2,9 +2,12 @@ import 'package:cocktalez/app/cocktails/data/model/cocktail_full_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/cocktails/ui/widgets/alcohol_cocktails.dart';
 import 'package:cocktalez/app/cocktails/ui/widgets/random_cocktail_card.dart';
-import 'package:cocktalez/app/components/regular_text.dart';
+import 'package:cocktalez/constants/router.dart';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../components/error_widget.dart';
@@ -25,7 +28,9 @@ class _CocktailsPageState extends State<CocktailsPage> {
           data: (randomCocktailAsyncvalue) {
         var randomCocktailValue = randomCocktailAsyncvalue.value;
 
-        print('Value : $randomCocktailValue');
+        if (kDebugMode) {
+          print('Value : $randomCocktailValue');
+        }
 
         if (randomCocktailValue is FullCocktailResponse) {
           fullCocktailResponse = randomCocktailValue;
@@ -37,16 +42,22 @@ class _CocktailsPageState extends State<CocktailsPage> {
             child: Column(children: [
               fullCocktailResponse != null
                   ? Expanded(
-                    flex: 2,
-                    child: randomCocktailCard(fullCocktailResponse!.drinks[0], context))
+                      flex: 1,
+                      child: InkWell(
+                          onTap: () {
+                            context.push(ScreenPaths.cocktailDetails(
+                                fullCocktailResponse!.drinks.first.idDrink));
+                          },
+                          child: randomCocktailCard(
+                              fullCocktailResponse!.drinks.first, context)))
                   : Container(),
-                 const SizedBox(height: 10),
-                 regularText('Alcoholic Cocktails',
-                 fontWeight: FontWeight.bold
-                 ),
-                 const Expanded(
-                   flex: 1,
-                  child: AlcoholicCocktails())
+              const SizedBox(height: 10),
+              Text(
+                'Alcoholic Cocktails',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              const SizedBox(height: 10),
+              const Expanded(flex: 1, child: AlcoholicCocktails())
             ]),
           ),
         );
