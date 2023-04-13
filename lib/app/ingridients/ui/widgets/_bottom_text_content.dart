@@ -63,19 +63,19 @@ class _BottomTextContent extends StatelessWidget {
                   ),
                 ],
               ),
-              if (!shortMode) Gap($dimensions.insets.sm),
-              const Spacer(),
+              if (!shortMode) Gap($dimensions.insets.sm), 
+               Gap($dimensions.insets.md),
               if (!shortMode)
                 AppPageIndicator(
                   count: state._drinks.length,
                   controller: state._pageController!,
                   semanticPageTitle: ingridient.strIngredient1,
                 ),
-              Gap($dimensions.insets.md),
+              Gap($dimensions.insets.sm),
               AppBtn.from(
                 text: "View All Ingredients",
                 expand: true,
-                onPressed: state._handleSearchTap,
+                onPressed: () => state._handleIngridientTap(_currentPage),
               ),
               Gap($dimensions.insets.lg),
             ],

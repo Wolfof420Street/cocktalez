@@ -101,6 +101,8 @@ flutter:
     - assets/images/
     - assets/anim/
     - assets/images/_common/
+    - assets/images/_common/icons/
+    - assets/images/_common/texture/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

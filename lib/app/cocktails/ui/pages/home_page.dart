@@ -1,6 +1,7 @@
 import 'package:cocktalez/app/cocktails/ui/pages/categories_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/cocktails_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/glasses_page.dart';
+import 'package:cocktalez/app/components/fluid_nav_bar/fluid_nav_bar.dart';
 import 'package:cocktalez/app/ingridients/ui/pages/ingredients_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,69 +15,45 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  PersistentTabController _tabController = PersistentTabController();
+
+  late Widget _child;
+
 
   @override
   void initState() {
-    _tabController = PersistentTabController(initialIndex: 1);
     super.initState();
+    _child = const CocktailsPage();
   }
 
-  List<Widget> _buildScreens() {
-    return [const IngridientsPage(), const CocktailsPage(), const CategoriesPage()];
-  }
 
-  List<PersistentBottomNavBarItem> _navBarItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.local_drink),
-        title: ("Ingridients"),
-        activeColorPrimary: CupertinoColors.activeBlue,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.home),
-        title: ("Home"),
-        activeColorPrimary: CupertinoColors.activeBlue,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.settings),
-        title: ("Glasses"),
-        activeColorPrimary: CupertinoColors.activeBlue,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-    ];
+    void _handleNavigationChange(int index) {
+    setState(() {
+      switch (index) {
+        case 0:
+          _child = const CocktailsPage();
+          break;
+        case 1:
+          _child = const IngridientsPage();
+          break;
+        case 2:
+          _child = const GlassesPage();
+          break;
+      }
+      _child = AnimatedSwitcher(
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        duration: const Duration(milliseconds: 500),
+        child: _child,);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      context,
-      controller: _tabController,
-      screens: _buildScreens(),
-      items: _navBarItems(),
-      confineInSafeArea: true,
-      handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: true,
-      stateManagement: true,
-      hideNavigationBarWhenKeyboardShows: true,
-      decoration: const NavBarDecoration(
-        colorBehindNavBar: Colors.white,
-      ),
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: const ItemAnimationProperties(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle:
-          NavBarStyle.style6, // Choose the nav bar style with this property.
+    return  Scaffold(
+        backgroundColor: const Color(0xFF75B7E1),
+        extendBody: true,
+        body: _child,
+        bottomNavigationBar: FluidNavBar(onChange: _handleNavigationChange),
     );
   }
 }

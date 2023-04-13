@@ -1,6 +1,6 @@
 part of '../pages/ingredients_page.dart';
 
-/// Blurry image background for the Artifact Highlights view. Contains horizontal and vertical gradients that stack overtop the blended image.
+/// Blurry image background for the Cocktail Highlights view. Contains horizontal and vertical gradients that stack overtop the blended image.
 class _BlurredImageBg extends StatelessWidget {
   const _BlurredImageBg({Key? key, this.url}) : super(key: key);
   final String? url;
@@ -16,9 +16,9 @@ class _BlurredImageBg extends StatelessWidget {
     final fgOpacity = introLogic.useBlurs ? 0.6 : 0.8;
     return Transform.scale(
       scale: 1.25,
-      alignment: Alignment(0, 0.8),
+      alignment: const Alignment(0, 0.8),
       child: Container(
-        foregroundDecoration: BoxDecoration(
+        foregroundDecoration: const BoxDecoration(
           color: Colors.black,
         ),
         child: introLogic.useBlurs
