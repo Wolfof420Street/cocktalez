@@ -110,8 +110,8 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
   List<FluidNavBarButton> _buildButtons() {
     List<FluidFillIconData> icons = [
       FluidFillIcons.home,
-      FluidFillIcons.user,
       FluidFillIcons.window,
+      FluidFillIcons.user,
     ];
  var buttons = List<FluidNavBarButton>.generate(
   3,
@@ -166,9 +166,7 @@ return buttons;
     );
     _yController.animateTo(0.0, duration: const Duration(milliseconds: 300));
 
-    if (widget.onChange != null) {
-      widget.onChange(index);
-    }
+    widget.onChange(index);
   }
 }
 

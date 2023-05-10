@@ -1,13 +1,14 @@
+import 'dart:async';
+
 import 'package:cocktalez/app/cocktails/ui/pages/cocktail_details_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/home_page.dart';
+import 'package:cocktalez/app/ingridients/ui/pages/cocktails_by_ingridient_page.dart';
 import 'package:cocktalez/app/search/ui/search_cocktail_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../app/components/app_scaffold.dart';
 import '../app/intro/intro_screen.dart';
-import '../app/search/ui/ingridients_search_page.dart';
 import '../main.dart';
 
 /// Shared paths / urls used across the app
@@ -24,21 +25,20 @@ class ScreenPaths {
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
   redirect: _handleRedirect,
-  navigatorBuilder: (_, __, child) => CocktaleAppScaffold(child: child),
   routes: [
     AppRoute(ScreenPaths.splash, (_) => Container(color: Colors.grey)), // This will be hidden
     AppRoute(ScreenPaths.home, (_) => const MyHomePage()),
     AppRoute(ScreenPaths.intro, (_) => const IntroScreen()),
     AppRoute(ScreenPaths.searchPage, (s) => const CocktailSearchScreen()),
     AppRoute('/ingredient/:ingredient', (s) {
-      return IngridientsSearchPage(
-        ingredient: s.params['ingredient']!,
+      return CocktailsByIngridientPage(
+        ingridient: s.pathParameters['ingredient']!,
       );
     }, useFade: true),
     AppRoute('/cocktail/:id', (s) {
      
       return CocktailDetailsPage(
-        id: s.params['id']!,
+        id: s.pathParameters['id']!,
       );
     }, useFade: true),
     
@@ -72,7 +72,7 @@ class AppRoute extends GoRoute {
   final bool useFade;
 }
 
-String? _handleRedirect(GoRouterState state) {
+FutureOr<String?> _handleRedirect(BuildContext context, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
   if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
     return ScreenPaths.splash;
@@ -80,3 +80,4 @@ String? _handleRedirect(GoRouterState state) {
   debugPrint('Navigate to: ${state.location}');
   return null; // do nothing
 }
+  

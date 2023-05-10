@@ -1,7 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
-import 'package:cocktalez/app/cocktails/ui/widgets/cocktail_card_renderer.dart';
 import 'package:cocktalez/app/cocktails/ui/widgets/rotation_3d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,15 +6,16 @@ import 'package:lottie/lottie.dart';
 
 import '../../../components/error_widget.dart';
 import '../../data/model/cocktail_response.dart';
+import 'cocktail_card_renderer.dart';
 
-class AlcoholicCocktails extends StatefulWidget {
-  const AlcoholicCocktails({super.key});
+class NonAlcoholicCocktails extends StatefulWidget {
+  const NonAlcoholicCocktails({super.key});
 
   @override
-  State<AlcoholicCocktails> createState() => _AlcoholicCocktailsState();
+  State<NonAlcoholicCocktails> createState() => _NonAlcoholicCocktailsState();
 }
 
-class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
+class _NonAlcoholicCocktailsState extends State<NonAlcoholicCocktails>
     with SingleTickerProviderStateMixin {
   final double _maxRotation = 20;
 
@@ -49,7 +47,7 @@ class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
         initialPage: 1, viewportFraction: _cardWidth / size.width);
 
     return Consumer(builder: (ctx, ref, child) {
-      return ref.watch(alcoholicCocktailsProvider).map(
+      return ref.watch(nonAlcoholicCocktailsProvider).map(
           data: (alcoholicCocktailAsyncValue) {
         CocktailResponse? cocktailResponse;
 

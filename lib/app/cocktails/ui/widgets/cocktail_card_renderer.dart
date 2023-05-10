@@ -1,8 +1,10 @@
 import 'package:cocktalez/app/cocktails/data/model/cocktail_response.dart';
 import 'package:cocktalez/constants/router.dart';
+import 'package:cocktalez/main.dart';
 
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_colors.dart';
@@ -42,8 +44,9 @@ class CocktailCardRenderer extends StatelessWidget {
           // City image, out of card by 15px
           Positioned(top: -15, child: InkWell(
             onTap: () => context.push(ScreenPaths.cocktailDetails(cocktail.idDrink)),
-            child: _buildCocktailImage())),
+            child:  _buildCocktailImage())),
           // City information
+           Gap($dimensions.insets.xl),
           _buildCocktailData()
         ],
       ),
@@ -56,7 +59,7 @@ class CocktailCardRenderer extends StatelessWidget {
     double cardPadding = 28;
     double containerWidth = cardWidth - cardPadding;
     return Container(
-      height: cardHeight,
+      height: cardHeight + 60,
       width: containerWidth,
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -79,6 +82,10 @@ class CocktailCardRenderer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Text(cocktail.strDrink,
           textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
           ),
         ),
       ],

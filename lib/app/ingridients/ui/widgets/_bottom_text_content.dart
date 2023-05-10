@@ -64,7 +64,7 @@ class _BottomTextContent extends StatelessWidget {
                 ],
               ),
               if (!shortMode) Gap($dimensions.insets.sm), 
-               Gap($dimensions.insets.md),
+              Gap($dimensions.insets.md),
               if (!shortMode)
                 AppPageIndicator(
                   count: state._drinks.length,
@@ -73,7 +73,7 @@ class _BottomTextContent extends StatelessWidget {
                 ),
               Gap($dimensions.insets.sm),
               AppBtn.from(
-                text: "View All Ingredients",
+                text: "View Cocktails",
                 expand: true,
                 onPressed: () => state._handleIngridientTap(_currentPage),
               ),

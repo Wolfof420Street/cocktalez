@@ -19,8 +19,9 @@ ui.Path extractPartialPath(ui.Path path, double start, double end) {
     final localStartPos = (startPos - l).clamp(0.0, m.length);
     final localEndPos = (endPos - l).clamp(0.0, m.length);
 
-    if (localStartPos < localEndPos)
+    if (localStartPos < localEndPos) {
       result.addPath(m.extractPath(localStartPos, localEndPos), ui.Offset.zero);
+    }
     l += m.length;
   }
 

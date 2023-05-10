@@ -55,6 +55,7 @@ class _IngridientsPageState extends State<IngridientsPage> {
     if (delta == 0) {
       Drinks data = _drinks[index % _drinks.length];
       // context.push(ScreenPaths.artifact(data.artifactId));
+      context.push(ScreenPaths.cocktailByIngredientScreen(data.strIngredient1));
     } else {
       _pageController?.animateToPage(
         _currentPage.value.round() + delta,
@@ -118,6 +119,8 @@ class _IngridientsPageState extends State<IngridientsPage> {
 
         return Stack(
           children: [
+           
+           
             /// Blurred Bg
             Positioned.fill(
               child: ValueListenableBuilder<num>(

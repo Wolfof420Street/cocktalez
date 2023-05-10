@@ -12,16 +12,16 @@ class NetworkErrorHandler {
           case DioErrorType.cancel:
             errorMessage = 'Request was cancelled';
             break;
-          case DioErrorType.connectTimeout:
+          case DioErrorType.connectionTimeout:
             errorMessage = 'Connection timeout';
             break;
-          case DioErrorType.other:
+          case DioErrorType.connectionError:
             errorMessage = 'Something went wrong';
             break;
           case DioErrorType.receiveTimeout:
             errorMessage = 'Receive timeout in connection';
             break;
-          case DioErrorType.response:
+          case DioErrorType.badResponse:
             errorMessage =
             'Received invalid status code: ${err.response?.statusCode}';
             break;
@@ -29,6 +29,13 @@ class NetworkErrorHandler {
             errorMessage = 'Send timeout in connection';
             break;
 
+          case DioErrorType.badCertificate:
+          
+            errorMessage = 'Invalid certificate';
+            break;
+          case DioErrorType.unknown:
+            errorMessage = 'Unexpected error occured';
+            break;
         }
         break;
       case SocketException:
