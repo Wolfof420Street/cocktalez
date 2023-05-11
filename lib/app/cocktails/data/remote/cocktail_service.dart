@@ -43,7 +43,7 @@ class CocktailService {
   getNonAlcoholicCocktails() async {
     try {
       var response = await dio
-          .get('${Endpoints.baseUrl}${Endpoints.getAlcoholicCocktails}');
+          .get('${Endpoints.baseUrl}${Endpoints.getNonAlcoholicCocktails}');
 
       if (response.statusCode == 200) {
         CocktailResponse cocktailResponse =

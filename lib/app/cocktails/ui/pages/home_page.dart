@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        backgroundColor: const Color(0xFF75B7E1),
+        backgroundColor: Theme.of(context).colorScheme.background,
         extendBody: true,
         body: _child,
         bottomNavigationBar: FluidNavBar(onChange: _handleNavigationChange),

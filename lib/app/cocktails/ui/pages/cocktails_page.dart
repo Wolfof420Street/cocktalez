@@ -64,7 +64,7 @@ class _CocktailsPageState extends State<CocktailsPage>  with SingleTickerProvide
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         )),
-              ),
+               ),
                Gap($dimensions.insets.xl),
                 Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),

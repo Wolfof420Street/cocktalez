@@ -31,7 +31,7 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: isTransparent ? Colors.transparent : AppColors.backgroundDark,
+      color: isTransparent ? Colors.transparent : Theme.of(context).cardColor,
       child: SafeArea(
         bottom: false,
         child: SizedBox(

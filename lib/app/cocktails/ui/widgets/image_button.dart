@@ -8,17 +8,7 @@ class _ImageBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        BottomCenter(
-          child: Transform.translate(
-            offset: Offset(0, $dimensions.insets.xl - 1),
-            child: VtGradient(
-              Theme.of(context).brightness == Brightness.light ? 
-              [AppColors.cardLight, Colors.grey.withOpacity(0)] : [AppColors.cardDark, Colors.grey.withOpacity(0)],
-              const [0, 1],
-              height: $dimensions.insets.xl,
-            ),
-          ),
-        ),
+       
         Container(
           color: Theme.of(context).brightness == Brightness.light
               ? AppColors.cardLight

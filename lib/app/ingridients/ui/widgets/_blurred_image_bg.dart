@@ -7,6 +7,8 @@ class _BlurredImageBg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    debugPrint('url new: $url');
     final img = AppImage(
       image: url == null ? null : NetworkImage(url!),
       syncDuration: $dimensions.times.fast,
@@ -18,9 +20,9 @@ class _BlurredImageBg extends StatelessWidget {
       scale: 1.25,
       alignment: const Alignment(0, 0.8),
       child: Container(
-        foregroundDecoration: const BoxDecoration(
-          color: Colors.black,
-        ),
+        decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+          ),
         child: introLogic.useBlurs
             ? ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),

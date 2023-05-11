@@ -34,9 +34,9 @@ class _ResultTile extends StatelessWidget {
               children: [
                 image,
                 Gap($dimensions.insets.md),
-                Text(data.strDrink,
-                  style: TextStyle(
-                    color: Theme.of(context).primaryTextTheme.displaySmall?.color
+                Flexible(
+                  child: Text(data.strDrink,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 )
               ],
