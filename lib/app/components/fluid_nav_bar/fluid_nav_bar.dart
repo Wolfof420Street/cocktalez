@@ -111,7 +111,7 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
     List<FluidFillIconData> icons = [
       FluidFillIcons.home,
       FluidFillIcons.window,
-      FluidFillIcons.user,
+      FluidFillIcons.glasses,
     ];
  var buttons = List<FluidNavBarButton>.generate(
   3,

@@ -15,7 +15,7 @@ class _CategoriesPagePageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
    
-    return const Scaffold(
+    return  Scaffold(
           body: Column(),
        );
   }

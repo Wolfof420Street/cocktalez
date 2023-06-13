@@ -4,7 +4,6 @@ import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/components/app_image.dart';
 
 import 'package:cocktalez/main.dart';
-import 'package:extra_alignments/extra_alignments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +16,6 @@ import '../../../components/buttons.dart';
 import '../../../components/cocktail_divider.dart';
 import '../../../components/error_widget.dart';
 import '../../../components/full_screen_image_viewer.dart';
-import '../../../components/gradient_container.dart';
 
 part  '../widgets/image_button.dart';
 part '../widgets/info_column.dart';

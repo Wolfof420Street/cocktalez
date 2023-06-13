@@ -1,5 +1,4 @@
 
-import 'package:cocktalez/constants/app_colors.dart';
 import 'package:cocktalez/constants/app_icons.dart';
 import 'package:cocktalez/main.dart';
 import 'package:flutter/material.dart';

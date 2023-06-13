@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:math';
 import 'dart:ui';
 
@@ -37,7 +39,7 @@ class IngridientsPage extends StatefulWidget {
 class _IngridientsPageState extends State<IngridientsPage> {
   PageController? _pageController;
 
-  List<Drinks> _drinks = [];
+  final List<Drinks> _drinks = [];
 
   final _currentPage = ValueNotifier<double>(9999);
 

@@ -32,4 +32,10 @@ class FluidFillIcons {
     ui.Path()..addRRect(const RRect.fromLTRBXY(-10, -2, 10, 10, 2, 2)),
     ui.Path()..moveTo(-14, -2)..lineTo(14, -2)..lineTo(0, -16)..close(),
   ]);
+  static final glasses = FluidFillIconData([
+    ui.Path()..addOval(Rect.fromCircle(center: Offset(-5, 0), radius: 5)),
+    ui.Path()..addOval(Rect.fromCircle(center: Offset(5, 0), radius: 5)),
+    ui.Path()..addRect(Rect.fromCenter(center: Offset(0, 0), width: 2, height: 2)),
+  ]);
+
 }

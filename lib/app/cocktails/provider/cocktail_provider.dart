@@ -23,11 +23,7 @@ final categoriesProvider = FutureProvider((ref) async {
   return categories;
 });
 
-final glassesProvider = FutureProvider((ref) async {
-  var glasses = await ref.watch(cocktailServiceProvider).getGlasses();
 
-  return glasses;
-});
 
 final ingridientsProvider = FutureProvider((ref) async {
   var ingridients = await ref.watch(cocktailServiceProvider).getIngridients();
@@ -52,14 +48,7 @@ final cocktailDetailsProvider =
   },
 );
 
-final cocktailByGlassProvider = FutureProvider.family<CocktailResponse, String>(
-  (ref, glass) async {
-    final cocktailsByGlass =
-        await ref.watch(cocktailServiceProvider).getCocktailsByGlass(glass);
 
-    return cocktailsByGlass;
-  },
-);
 
 final cocktailByCategoryProvider =
     FutureProvider.family<CocktailResponse, String>(

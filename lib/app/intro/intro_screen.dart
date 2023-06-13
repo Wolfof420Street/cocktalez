@@ -15,6 +15,7 @@ import '../../constants/app_hactics.dart';
 import '../../constants/app_icons.dart';
 import '../../constants/assets.dart';
 import '../../constants/router.dart';
+import '../components/app_indicator.dart';
 import '../components/circle_buttons.dart';
 import '../components/themed_text.dart';
 
@@ -156,13 +157,12 @@ class _IntroScreenState extends State<IntroScreen> {
                     // placeholder gap for text:
                     const Gap(_IntroScreenState._textHeight),
 
-                    // page indicator:
+                   // page indicator:
                     Container(
                       height: _pageIndicatorHeight,
                       alignment: const Alignment(0.0, 0),
-                      child: Center(
-                        child: Lottie.asset('assets/anim/intro_loading.json'),
-                      ),
+                      child: AppPageIndicator(
+                          count: pageData.length, controller: _pageController, color: AppColors.accent),
                     ),
 
                     const Spacer(flex: 2),
@@ -286,10 +286,10 @@ class _Page extends StatelessWidget {
                 children: [
                   Text(
                     data.title,
-                    style: TextStyle(fontSize: 24 * $dimensions.scale),
+                    style: TextStyle(fontSize: 20 * $dimensions.scale),
                   ),
                   Gap($dimensions.insets.sm),
-                  Text(data.desc, textAlign: TextAlign.center),
+                  Expanded(child: Text(data.desc, textAlign: TextAlign.center)),
                 ],
               ),
             ),
@@ -310,7 +310,7 @@ class _WonderousLogo extends StatelessWidget {
       children: [
         ExcludeSemantics(
           child: SvgPicture.asset(SvgPaths.compassSimple,
-              color: Colors.white, height: 48),
+              theme: const SvgTheme(currentColor: Colors.white) , height: 48),
         ),
         Gap($dimensions.insets.xs),
         StaticTextScale(

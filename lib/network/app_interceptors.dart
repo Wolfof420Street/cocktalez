@@ -37,7 +37,7 @@ class AppInterceptors extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
-      //TODO: lock request and response
+    
 
       Navigator.pushNamedAndRemoveUntil(
           g.Get.context!, ScreenPaths.splash, (route) => false);

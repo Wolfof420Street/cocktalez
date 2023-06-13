@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class LoggingInterceptor extends Interceptor {
   @override
@@ -8,16 +9,16 @@ class LoggingInterceptor extends Interceptor {
       RequestOptions options,
       RequestInterceptorHandler handler,
       ) async {
-    print(
+    debugPrint(
       "┌------------------------------------------------------------------------------",
     );
-    print('| Request: ${options.method} ${options.uri}');
-    print('| Body: ${options.data.toString()}');
-    print('| Headers:');
+    debugPrint('| Request: ${options.method} ${options.uri}');
+    debugPrint('| Body: ${options.data.toString()}');
+    debugPrint('| Headers:');
     options.headers.forEach((key, value) {
-      print('|\t$key: $value');
+      debugPrint('|\t$key: $value');
     });
-    print(
+    debugPrint(
       "├------------------------------------------------------------------------------",
     );
     handler.next(options);
@@ -28,9 +29,9 @@ class LoggingInterceptor extends Interceptor {
       Response response,
       ResponseInterceptorHandler handler,
       ) async {
-    print("| Response [code ${response.statusCode}]");
-    print("| Body: ${response.data.toString()}");
-    print(
+    debugPrint("| Response [code ${response.statusCode}]");
+    debugPrint("| Body: ${response.data.toString()}");
+    debugPrint(
       "└------------------------------------------------------------------------------",
     );
     handler.next(response);
@@ -41,9 +42,9 @@ class LoggingInterceptor extends Interceptor {
       DioError err,
       ErrorInterceptorHandler handler,
       ) async {
-    print("| Error: [code ${err.response?.statusCode ?? 0}]");
-    print("| Error body: ${err.response.toString()}");
-    print(
+    debugPrint("| Error: [code ${err.response?.statusCode ?? 0}]");
+    debugPrint("| Error body: ${err.response.toString()}");
+    debugPrint(
       "└------------------------------------------------------------------------------",
     );
     handler.next(err); //continue

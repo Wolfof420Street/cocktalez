@@ -58,7 +58,7 @@ class CocktailCardRenderer extends StatelessWidget {
     double globalOffset = offset * maxParallax * 2;
     double cardPadding = 28;
     double containerWidth = cardWidth - cardPadding;
-    return Container(
+    return SizedBox(
       height: cardHeight + 60,
       width: containerWidth,
       child: Stack(

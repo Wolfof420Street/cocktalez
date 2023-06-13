@@ -11,7 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../components/error_widget.dart';
-import '../widgets/non-alcoholic-cocktails.dart';
+import '../widgets/non_alcoholic_cocktails.dart';
 
 class CocktailsPage extends StatefulWidget {
   const CocktailsPage({super.key});
@@ -92,7 +92,7 @@ class _CocktailsPageState extends State<CocktailsPage>  with SingleTickerProvide
                 tabs: const [
                   Tab(
                   child: Text(
-                    'Random',
+                    'Popular',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -122,13 +122,10 @@ class _CocktailsPageState extends State<CocktailsPage>  with SingleTickerProvide
                 Expanded(
                   child: TabBarView(
                     controller: _tabController,
-                    children: [
-                      randomCocktailCard(
-                        fullCocktailResponse!.drinks.first,
-                        context
-                      ),
-                      const AlcoholicCocktails(),
-                      const NonAlcoholicCocktails()
+                    children: const [
+                      AlcoholicCocktails(),
+                      AlcoholicCocktails(),
+                      NonAlcoholicCocktails()
                     ],
                   ),
                 ),

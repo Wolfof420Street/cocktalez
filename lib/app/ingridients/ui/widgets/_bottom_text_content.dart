@@ -53,7 +53,7 @@ class _BottomTextContent extends StatelessWidget {
                           if (!shortMode) ...[
                             Gap($dimensions.insets.xxs),
                             const Text(
-                              "ingredient",
+                              "",
                               textAlign: TextAlign.center,
                             ),
                           ]
