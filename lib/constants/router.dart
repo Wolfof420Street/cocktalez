@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../app/glass/ui/pages/cocktail_by_glass_page.dart';
 import '../app/intro/intro_screen.dart';
 import '../main.dart';
 
@@ -20,6 +21,8 @@ class ScreenPaths {
   static String cocktailDetails(String id) => '/cocktail/$id';
   static String searchPage = '/search';
   static String cocktailByIngredientScreen(String ingredient) => '/ingredient/$ingredient';
+  static String cocktailByGlassScreen(String glass) => '/glasses/$glass';
+
 }
 
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
@@ -33,6 +36,11 @@ final appRouter = GoRouter(
     AppRoute('/ingredient/:ingredient', (s) {
       return CocktailsByIngridientPage(
         ingridient: s.pathParameters['ingredient']!,
+      );
+    }, useFade: true),
+     AppRoute('/glasses/:glass', (s) {
+      return CocktailByGlassPage(
+        glass: s.pathParameters['glass']!,
       );
     }, useFade: true),
     AppRoute('/cocktail/:id', (s) {

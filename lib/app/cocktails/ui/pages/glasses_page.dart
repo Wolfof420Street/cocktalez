@@ -1,6 +1,6 @@
 import 'package:cocktalez/app/cocktails/data/model/glass_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
-import 'package:cocktalez/app/glass/ui/glass_card.dart';
+import 'package:cocktalez/app/glass/ui/widgets/glass_card.dart';
 import 'package:cocktalez/constants/failure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

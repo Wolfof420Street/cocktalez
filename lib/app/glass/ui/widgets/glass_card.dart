@@ -3,10 +3,12 @@ import 'dart:math';
 
 import 'package:cocktalez/app/cocktails/data/model/glass_response.dart';
 import 'package:cocktalez/app/components/buttons.dart';
-import 'package:cocktalez/app/glass/ui/liquid_painter.dart';
-import 'package:cocktalez/app/glass/ui/rounded_shadow.dart';
+import 'package:cocktalez/app/glass/ui/widgets/liquid_painter.dart';
+import 'package:cocktalez/app/glass/ui/widgets/rounded_shadow.dart';
 import 'package:cocktalez/constants/app_colors.dart';
+import 'package:cocktalez/constants/router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GlassCard extends StatefulWidget {
   static double nominalHeightClosed = 96;
@@ -98,11 +100,13 @@ class _GlassCardState extends State<GlassCard> with TickerProviderStateMixin {
             opacity: isDisabled ? .6 : 1,
             child: AppBtn(
               //Enable the button if we have enough points. Can do this by assigning a onPressed listener, or not.
-              onPressed: isDisabled ? () {} : null,
+              onPressed: () {
+                context.push(ScreenPaths.cocktailByGlassScreen(widget.drink.strGlass));
+              } ,
               bgColor: AppColors.accent,
               semanticLabel: 'view All',
               child: const Text(
-                "View  all",
+                "View all",
               ),
             ),
           ),
