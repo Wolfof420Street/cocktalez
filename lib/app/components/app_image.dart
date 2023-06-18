@@ -6,9 +6,10 @@ import 'package:cocktalez/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_fade/image_fade.dart';
-import 'package:lottie/lottie.dart';
+
 
 import '../../constants/retry_image.dart';
+import 'app_loading_indicator.dart';
 
 class AppImage extends StatefulWidget {
   const AppImage({
@@ -68,9 +69,9 @@ class _AppImageState extends State<AppImage> {
       alignment: widget.alignment,
       duration: widget.duration ?? $dimensions.times.fast,
       syncDuration: widget.syncDuration ?? 0.ms,
-      loadingBuilder: (_, value, ___) {
+       loadingBuilder: (_, value, ___) {
         if (!widget.distractor && !widget.progress) return const SizedBox();
-        return Center(child: Lottie.asset('assets/anim/intro_loading.json'));
+        return Center(child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color));
       },
       errorBuilder: (_, __) => Container(
         padding: EdgeInsets.all($dimensions.insets.xs),

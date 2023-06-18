@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cocktalez/app/cocktails/ui/pages/cocktail_details_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/home_page.dart';
 import 'package:cocktalez/app/ingridients/ui/pages/cocktails_by_ingridient_page.dart';
-import 'package:cocktalez/app/search/ui/search_cocktail_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +31,6 @@ final appRouter = GoRouter(
     AppRoute(ScreenPaths.splash, (_) => Container(color: Colors.grey)), // This will be hidden
     AppRoute(ScreenPaths.home, (_) => const MyHomePage()),
     AppRoute(ScreenPaths.intro, (_) => const IntroScreen()),
-    AppRoute(ScreenPaths.searchPage, (s) => const CocktailSearchScreen()),
     AppRoute('/ingredient/:ingredient', (s) {
       return CocktailsByIngridientPage(
         ingridient: s.pathParameters['ingredient']!,
@@ -44,7 +42,6 @@ final appRouter = GoRouter(
       );
     }, useFade: true),
     AppRoute('/cocktail/:id', (s) {
-     
       return CocktailDetailsPage(
         id: s.pathParameters['id']!,
       );

@@ -175,15 +175,11 @@ class _IngridientsPageState extends State<IngridientsPage> {
             ),
 
             /// Header
-            AppHeader(
+            const AppHeader(
               title: 'Ingridients',
               showBackBtn: false,
               isTransparent: true,
-              trailing: (context) => CircleBtn(
-                semanticLabel: '',
-                onPressed: _handleSearchTap,
-                child: const AppIcon(AppIcons.search),
-              ),
+            
             ),
           ],
         );

@@ -7,12 +7,14 @@ import 'package:cocktalez/app/glass/ui/widgets/liquid_painter.dart';
 import 'package:cocktalez/app/glass/ui/widgets/rounded_shadow.dart';
 import 'package:cocktalez/constants/app_colors.dart';
 import 'package:cocktalez/constants/router.dart';
+import 'package:cocktalez/main.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class GlassCard extends StatefulWidget {
   static double nominalHeightClosed = 96;
-  static double nominalHeightOpen = 290;
+  static double nominalHeightOpen = 220;
 
   final Function(Drinks) onTap;
 
@@ -60,8 +62,7 @@ class _GlassCardState extends State<GlassCard> with TickerProviderStateMixin {
   }
 
   Column _buildBottomContent(double pointsValue) {
-    bool isDisabled = false;
-
+   
     List<Widget> rowChildren = [];
 
     if (pointsValue == 0) {
@@ -86,24 +87,24 @@ class _GlassCardState extends State<GlassCard> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           children: rowChildren,
         ),
-        const SizedBox(height: 16),
-        const Text(
-          "Keep going to earn more points and unlock new cocktails!",
+        Gap($dimensions.insets.md),
+         Text(
+          "Click view all to view more ${widget.drink.strGlass} cocktails!",
         ),
-
-        const SizedBox(height: 16),
+       Gap($dimensions.insets.md),
         //Main Button
         ButtonTheme(
           minWidth: 200,
           height: 40,
           child: Opacity(
-            opacity: isDisabled ? .6 : 1,
+            opacity: 1,
             child: AppBtn(
               //Enable the button if we have enough points. Can do this by assigning a onPressed listener, or not.
               onPressed: () {
                 context.push(ScreenPaths.cocktailByGlassScreen(widget.drink.strGlass));
               } ,
               bgColor: AppColors.accent,
+      
               semanticLabel: 'view All',
               child: const Text(
                 "View all",

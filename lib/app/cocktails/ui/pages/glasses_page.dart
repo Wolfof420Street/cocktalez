@@ -1,7 +1,9 @@
 import 'package:cocktalez/app/cocktails/data/model/glass_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
+import 'package:cocktalez/app/components/app_header.dart';
 import 'package:cocktalez/app/glass/ui/widgets/glass_card.dart';
 import 'package:cocktalez/constants/failure.dart';
+import 'package:cocktalez/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -20,7 +22,7 @@ class _GlassesPageState extends State<GlassesPage> {
   final double _listPadding = 20;
   final ScrollController _scrollController = ScrollController();
 
-  bool  _isOpen = false;
+
 
   String? _selectedGlass;
 
@@ -73,7 +75,13 @@ class _GlassesPageState extends State<GlassesPage> {
         _glassResponse = glasses;
 
         return  Scaffold(
+          appBar: PreferredSize(
+            preferredSize: $dimensions.sizes.minAppSize,
+            child: const AppHeader(
+              title: 'Glasses',
+              showBackBtn: false)),
           body: ListView.builder(
+            itemCount: _glassResponse!.drinks.length, 
             scrollDirection: Axis.vertical,
             controller: _scrollController,
             padding: const EdgeInsets.only(bottom: 40, top: 10),

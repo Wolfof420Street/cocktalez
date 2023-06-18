@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../constants/app_colors.dart';
+import '../../../components/app_header.dart';
 import '../../../components/buttons.dart';
 import '../../../components/cocktail_divider.dart';
 import '../../../components/error_widget.dart';
@@ -71,7 +72,8 @@ class _CocktailDetailsPageState extends State<CocktailDetailsPage> {
           body: SafeArea(
             child: Stack(
               children: [
-                content
+                content,
+                const AppHeader(isTransparent: true),
               ],
             )
           ),

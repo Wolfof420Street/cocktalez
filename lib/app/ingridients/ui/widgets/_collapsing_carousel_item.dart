@@ -86,7 +86,9 @@ class _DoubleBorderImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(999),
             child: ColoredBox(
               color: Colors.grey,
-              child: AppImage(image: NetworkImage('https://www.thecocktaildb.com/images/ingredients/${data.strIngredient1}.png'), fit: BoxFit.cover, scale: 0.5),
+              child: AppImage(
+                progress: true,
+                image: NetworkImage('https://www.thecocktaildb.com/images/ingredients/${data.strIngredient1}.png'), fit: BoxFit.cover, scale: 0.5),
             ),
           ),
         ),
