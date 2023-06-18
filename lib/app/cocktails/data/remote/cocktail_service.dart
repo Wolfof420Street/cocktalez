@@ -5,23 +5,27 @@ import 'package:cocktalez/app/cocktails/data/model/glass_response.dart';
 import 'package:cocktalez/app/cocktails/data/model/ingridients_response.dart';
 import 'package:cocktalez/constants/endpoints.dart';
 import 'package:cocktalez/constants/failure.dart';
-import 'package:cocktalez/network/base_client.dart';
+import 'package:dio/dio.dart';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final cocktailServiceProvider =
-    Provider<CocktailService>((ref) => CocktailService());
+import '../../../../network/network_provider.dart';
+
+final cocktailServiceProvider = Provider<CocktailService>((ref) {
+  var dio = ref.read(networkProvider);
+  return CocktailService(dio);
+});
 
 class CocktailService {
-  factory CocktailService() => _instance ??= CocktailService._();
+  Dio dio;
 
-  CocktailService._();
-
-  static CocktailService? _instance;
+  CocktailService(this.dio);
 
   getAlcoholicCocktails() async {
     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getAlcoholicCocktails);
+      var response = await dio
+          .get('${Endpoints.baseUrl}${Endpoints.getAlcoholicCocktails}');
 
       if (response.statusCode == 200) {
         CocktailResponse cocktailResponse =
@@ -38,8 +42,8 @@ class CocktailService {
 
   getNonAlcoholicCocktails() async {
     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getAlcoholicCocktails);
+      var response = await dio
+          .get('${Endpoints.baseUrl}${Endpoints.getNonAlcoholicCocktails}');
 
       if (response.statusCode == 200) {
         CocktailResponse cocktailResponse =
@@ -56,8 +60,8 @@ class CocktailService {
 
   getCategories() async {
     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getCategories);
+      var response =
+          await dio.get("${Endpoints.baseUrl}${Endpoints.getCategories}");
 
       if (response.statusCode == 200) {
         CategoryResponse categoryResponse =
@@ -74,8 +78,8 @@ class CocktailService {
 
   getGlasses() async {
     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getGlasses);
+      var response =
+          await dio.get('${Endpoints.baseUrl}${Endpoints.getGlasses}');
 
       if (response.statusCode == 200) {
         GlassResponse glassResponse = GlassResponse.fromJson(response.data);
@@ -91,11 +95,12 @@ class CocktailService {
 
   getIngridients() async {
     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getIngridients);
+      var response =
+          await dio.get('${Endpoints.baseUrl}${Endpoints.getIngridients}');
 
       if (response.statusCode == 200) {
-        IngridientsResponse glassResponse = IngridientsResponse.fromJson(response.data);
+        IngridientsResponse glassResponse =
+            IngridientsResponse.fromJson(response.data);
 
         return glassResponse;
       } else {
@@ -108,30 +113,43 @@ class CocktailService {
 
   getRandomCocktail() async {
     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getRandomCocktail);
+      var response =
+          await dio.get('${Endpoints.baseUrl}${Endpoints.getRandomCocktail}');
+
+      if (kDebugMode) {
+        print("Response : ${response.data}");
+      }
 
       if (response.statusCode == 200) {
-        FullCocktailResponse fullCocktailResponse = FullCocktailResponse.fromJson(response.data);
-
+        FullCocktailResponse fullCocktailResponse =
+            FullCocktailResponse.fromJson(response.data);
+        if (kDebugMode) {
+          print('Cocktail Response : ${fullCocktailResponse.toJson()}');
+        }
         return fullCocktailResponse;
       } else {
+        if (kDebugMode) {
+          print('Failure : ${response.statusMessage}');
+        }
         return Failure(response.statusMessage);
       }
     } catch (e) {
+      if (kDebugMode) {
+        print('Failure : $e');
+      }
       return Failure('$e');
     }
   }
 
   getCocktailDetails(String id) async {
-      try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.getCocktailDetails, queryParameters: {
-            'i' : id
-          });
+    try {
+      var response = await dio.get(
+          '${Endpoints.baseUrl}${Endpoints.getCocktailDetails}',
+          queryParameters: {'i': id});
 
       if (response.statusCode == 200) {
-        FullCocktailResponse fullCocktailResponse = FullCocktailResponse.fromJson(response.data);
+        FullCocktailResponse fullCocktailResponse =
+            FullCocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
@@ -143,14 +161,14 @@ class CocktailService {
   }
 
   getCocktailsByGlass(String glass) async {
-     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.filterCocktail, queryParameters: {
-            'g' : glass
-          });
+    try {
+      var response = await dio.get(
+          '${Endpoints.baseUrl}${Endpoints.filterCocktail}',
+          queryParameters: {'g': glass});
 
       if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse = CocktailResponse.fromJson(response.data);
+        CocktailResponse fullCocktailResponse =
+            CocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
@@ -162,14 +180,14 @@ class CocktailService {
   }
 
   getCocktailsByCategory(String category) async {
-      try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.filterCocktail, queryParameters: {
-            'c' : category
-          });
+    try {
+      var response = await dio.get(
+          '${Endpoints.baseUrl}${Endpoints.filterCocktail}',
+          queryParameters: {'c': category});
 
       if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse = CocktailResponse.fromJson(response.data);
+        CocktailResponse fullCocktailResponse =
+            CocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
@@ -181,14 +199,14 @@ class CocktailService {
   }
 
   getCocktailsByIngredient(String ingridient) async {
-     try {
-      var response = await BaseClient.getClient(Endpoints.baseUrl)
-          .get(Endpoints.filterCocktail, queryParameters: {
-            'i' : ingridient
-          });
+    try {
+      var response = await dio.get(
+          '${Endpoints.baseUrl}${Endpoints.filterCocktail}',
+          queryParameters: {'i': ingridient});
 
       if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse = CocktailResponse.fromJson(response.data);
+        CocktailResponse fullCocktailResponse =
+            CocktailResponse.fromJson(response.data);
 
         return fullCocktailResponse;
       } else {
@@ -198,4 +216,7 @@ class CocktailService {
       return Failure('$e');
     }
   }
-}
+
+  
+
+ }
