@@ -24,9 +24,9 @@ Cocktalez is a well-structured Flutter application that allows you to explore a 
 ## Project Structure and Architecture
 Cocktalez is based on clean architecture principles. The project is divided into the following layers:
 
-- ** Presentation Layer ** : Contains UI related elements such as Widgets and animation files.
-- ** Domain Layer ** :  Called the provider in the code for each module. Contains business logic, entities and use cases.
-- ** Service Layer ** : Called the service class. This class handles the data from [The Cockail DB API](https://www.thecocktaildb.com/api.php)
+- **Presentation Layer** : Contains UI related elements such as Widgets and animation files.
+- **Domain Layer** :  Called the provider in the code for each module. Contains business logic, entities and use cases.
+- **Service Layer** : Called the service class. This class handles the data from [The Cockail DB API](https://www.thecocktaildb.com/api.php)
 
 ## Testing
 The application has a comprehensive set of tests that cover both unit and widget tests, ensuring code quality and functionality at all times.
@@ -59,3 +59,16 @@ To run the tests, use the following command in the terminal:
 Cocktalez provides a robust example of a Flutter application using clean architecture, state management with Riverpod, and high-quality animations. It demonstrates best practices for structuring and managing Flutter projects. Enjoy exploring Cocktalez!
 
 For any questions or comments, feel free to reach out.
+
+## Credit
+UI inspo from [Flutter Vignettes](https://github.com/gskinnerTeam/flutter_vignettes/tree/master)
+
+
+## License
+
+<br/>
+
+This project is released under the [MIT license](LICENSE.md). You can use the code for any purpose, including commercial projects.
+
+[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
