@@ -48,7 +48,7 @@ class AppLogic {
     isBootstrapComplete = true;
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
-    bool showIntro = introLogic.hasCompletedOnboarding.value == false;
+    bool showIntro = introLogic.hasCompletedOnboarding.value == true;
     if (showIntro) {
       appRouter.go(ScreenPaths.intro);
     } else {

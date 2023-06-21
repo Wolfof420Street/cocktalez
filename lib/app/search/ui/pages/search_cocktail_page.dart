@@ -60,34 +60,37 @@ class SearchCocktailsResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusManager.instance.primaryFocus?.unfocus,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const AppHeader(
-            isTransparent: true,
-            showBackBtn: false,
-            title: '',
-            subtitle: 'Search results',
-          ),
-          searchCocktailsResponse.drinks.isEmpty
-              ? Expanded(
-                  child: Center(
-                    child: Text(
-                      'No cocktails found',
-                      style: Theme.of(context).textTheme.titleLarge,
+      child: Container(
+        height: context.heightPx,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const AppHeader(
+              isTransparent: true,
+              showBackBtn: false,
+              title: '',
+              subtitle: 'Search results',
+            ),
+            searchCocktailsResponse.drinks.isEmpty
+                ? Expanded(
+                    child: Center(
+                      child: Text(
+                        'No cocktails found',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                     ),
-                  ),
-                )
-              :
-          Expanded(
-            child: RepaintBoundary(
-              child: SearchCocktailGrid(
-                cocktailResponse: searchCocktailsResponse,
-                onPressed: onPressed,
+                  )
+                :
+            Expanded(
+              child: RepaintBoundary(
+                child: SearchCocktailGrid(
+                  cocktailResponse: searchCocktailsResponse,
+                  onPressed: onPressed,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

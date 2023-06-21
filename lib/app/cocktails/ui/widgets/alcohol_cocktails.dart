@@ -174,7 +174,7 @@ class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
       }, error: (error) {
         return Scaffold(body: customErrorWidget(() {
           return ref.refresh(alcoholicCocktailsProvider);
-        }));
+        }, context: context));
       });
     });
   }

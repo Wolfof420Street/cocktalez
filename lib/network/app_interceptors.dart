@@ -33,21 +33,29 @@ class AppInterceptors extends Interceptor {
 
   @override
   FutureOr<dynamic> onError(
-    DioError err,
+    DioException err,
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
     
-
-      Navigator.pushNamedAndRemoveUntil(
-          g.Get.context!, ScreenPaths.splash, (route) => false);
-
+      return;
+    } else if (err.response?.statusCode == 403) {
+     
+      return;
+    } else if (err.response?.statusCode == 404) {
+      
+      return;
+    } else if (err.response?.statusCode == 500) {
+      
+      return;
+    } else if (err.response?.statusCode == 503) {
+      
       return;
     }
 
     String errorMessage = NetworkErrorHandler.handleError(err);
 
-    showErrorDialog(g.Get.context!, errorMessage);
+    print("Network Error message $errorMessage");
 
     return handler.next(err);
   }

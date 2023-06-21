@@ -69,7 +69,7 @@ class _GlassesPageState extends State<GlassesPage> {
         if(glasses is Failure) {
           return Scaffold(body: customErrorWidget(() {
             return ref.refresh(glassesProvider);
-          }));
+          }, context: context));
         } 
 
         _glassResponse = glasses;
@@ -98,7 +98,7 @@ class _GlassesPageState extends State<GlassesPage> {
       }, error: (error) {
         return Scaffold(body: customErrorWidget(() {
           return ref.refresh(randomCocktailProvider);
-        }));
+        }, context: context));
       });
     });
   }

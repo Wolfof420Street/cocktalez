@@ -17,10 +17,11 @@ class CocktailsPage extends StatefulWidget {
   const CocktailsPage({Key? key}) : super(key: key);
 
   @override
-  _CocktailsPageState createState() => _CocktailsPageState();
+  createState() => _CocktailsPageState();
 }
 
-class _CocktailsPageState extends State<CocktailsPage> with SingleTickerProviderStateMixin {
+class _CocktailsPageState extends State<CocktailsPage>
+    with SingleTickerProviderStateMixin {
   TabController? _tabController;
   final TextEditingController _searchController = TextEditingController();
 
@@ -45,60 +46,78 @@ class _CocktailsPageState extends State<CocktailsPage> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false, // set it to false
-      body: SafeArea(
-        child: Consumer(builder: (context, ref, child) {
-          return ref.watch(randomCocktailProvider).when(
-            data: (randomCocktailValue) {
-              if (kDebugMode) print('Value : $randomCocktailValue');
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: SafeArea(
+          child: Consumer(builder: (context, ref, child) {
+            return ref.watch(randomCocktailProvider).when(
+                  data: (randomCocktailValue) {
+                    if (kDebugMode) print('Value : $randomCocktailValue');
 
-              return Column(
-                children: [
-                  Gap($dimensions.insets.xl),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: $dimensions.insets.md),
-                    child: const Text(
-                      "Mix & Sip: Unleash the Magic of Spirited Concoctions! 🍹✨",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Gap($dimensions.insets.xl),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Search for Cocktails',
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: Column(
+                          children: [
+                            Gap($dimensions.insets.xl),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: $dimensions.insets.md),
+                              child: const Text(
+                                "Mix & Sip: Unleash the Magic of Spirited Concoctions! 🍹✨",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Gap($dimensions.insets.xl),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: 'Search for Cocktails',
+                                  filled: true,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  prefixIcon:
+                                      const Icon(Icons.search, color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                            Gap($dimensions.insets.xl),
+                            _searchController.text.isNotEmpty &&
+                                      _searchController.text.length > 3
+                                  ? CocktailSearchScreen(
+                                      searchQuery: _searchController.text)
+                                  : _buildTabbedContent(),
+                            
+                          ],
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        prefixIcon: const Icon(Icons.search, color: Colors.grey),
                       ),
-                    ),
-                  ),
-                  Gap($dimensions.insets.xl),
-                  Expanded(
-                    child: _searchController.text.isNotEmpty && _searchController.text.length > 3
-                        ? CocktailSearchScreen(searchQuery: _searchController.text)
-                        : _buildTabbedContent(),
-                  ),
-                ],
-              );
-            },
-            loading: () => Center(child: Lottie.asset('assets/anim/intro_loading.json')),
-            error: (_, __) => customErrorWidget(() {}),
-          );
-        }),
+                    );
+                  },
+                  loading: () => Center(
+                      child: Lottie.asset('assets/anim/intro_loading.json')),
+                  error: (_, __) => customErrorWidget(() {}, context: context),
+                );
+          }),
+        ),
       ),
     );
   }
@@ -139,8 +158,9 @@ class _CocktailsPageState extends State<CocktailsPage> with SingleTickerProvider
           ],
         ),
         Gap($dimensions.insets.xl),
-        Expanded(
-            child: TabBarView(
+        Container(
+          height: 400,
+          child: TabBarView(
             controller: _tabController,
             children: const [
               AlcoholicCocktails(),
@@ -153,4 +173,3 @@ class _CocktailsPageState extends State<CocktailsPage> with SingleTickerProvider
     );
   }
 }
-
