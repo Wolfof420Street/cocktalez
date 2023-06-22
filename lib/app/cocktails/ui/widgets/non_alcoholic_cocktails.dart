@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/cocktails/ui/widgets/rotation_3d.dart';
 import 'package:flutter/material.dart';
@@ -172,7 +174,7 @@ class _NonAlcoholicCocktailsState extends State<NonAlcoholicCocktails>
       }, error: (error) {
         return Scaffold(body: customErrorWidget(() {
           return ref.refresh(alcoholicCocktailsProvider);
-        }));
+        }, context: context));
       });
     });
   }

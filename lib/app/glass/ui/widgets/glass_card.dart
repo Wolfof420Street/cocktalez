@@ -202,7 +202,7 @@ class _GlassCardState extends State<GlassCard> with TickerProviderStateMixin {
         child: RoundedShadow.fromRadius(
           12,
           child: Container(
-            color: const Color(0xff303238),
+            color: Theme.of(context).cardColor,
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[

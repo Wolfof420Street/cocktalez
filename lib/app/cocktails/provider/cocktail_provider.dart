@@ -10,6 +10,12 @@ final alcoholicCocktailsProvider = FutureProvider((ref) async {
   return alcohols;
 });
 
+final popularCocktailsProvider = FutureProvider((ref) async {
+  var alcohols = await ref.watch(cocktailServiceProvider).getPopularCocktails();
+
+  return alcohols;
+});
+
 final nonAlcoholicCocktailsProvider = FutureProvider((ref) async {
   var alcohols =
       await ref.watch(cocktailServiceProvider).getNonAlcoholicCocktails();

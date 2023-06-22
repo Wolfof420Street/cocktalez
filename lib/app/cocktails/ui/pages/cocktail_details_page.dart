@@ -87,7 +87,7 @@ class _CocktailDetailsPageState extends State<CocktailDetailsPage> {
       }, error: (error) {
         return Scaffold(body: customErrorWidget(() {
           return ref.refresh(alcoholicCocktailsProvider);
-        }));
+        }, context: context));
       });
     });
   }

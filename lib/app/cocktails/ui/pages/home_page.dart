@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-    void _handleNavigationChange(int index) {
+  void _handleNavigationChange(int index) {
     setState(() {
       switch (index) {
         case 0:

@@ -67,7 +67,7 @@ class CocktailsByIngridientPage extends StatelessWidget {
       }, error: (error) {
         return Scaffold(body: customErrorWidget(() {
           return ref.refresh(cocktailByIngridientProvider(ingridient));
-        }));
+        }, context: context));
       });
     });
   }

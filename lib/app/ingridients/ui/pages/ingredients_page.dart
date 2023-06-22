@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:cocktalez/app/cocktails/data/model/ingridients_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/components/error_widget.dart';
+import 'package:cocktalez/constants/failure.dart';
 import 'package:cocktalez/main.dart';
 import 'package:extra_alignments/extra_alignments.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,8 @@ class _IngridientsPageState extends State<IngridientsPage> {
 
   final _currentPage = ValueNotifier<double>(9999);
 
+  IngridientsResponse? ingridientsResponse;
+
   late final _currentArtifactIndex = ValueNotifier<num>(_wrappedPageIndex);
 
   num get _wrappedPageIndex => _currentPage.value.round() % _drinks.length;
@@ -67,16 +70,25 @@ class _IngridientsPageState extends State<IngridientsPage> {
     }
   }
 
-  void _handleSearchTap() {}
 
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: ((context, ref, child) {
       return ref.watch(ingridientsProvider).map(data: (ingridientsAsyncValue) {
-        IngridientsResponse ingridientsResponse = ingridientsAsyncValue.value;
+         var val = ingridientsAsyncValue.value;
+
+         if(val is Failure) {
+            debugPrint("Failure");
+            return customErrorWidget(() { 
+              return ref.refresh(ingridientsProvider);
+            }, context: context);
+
+         }  else if(val is IngridientsResponse) {
+           ingridientsResponse = val;
+         }
 
         _drinks.clear();
-        _drinks.addAll(ingridientsResponse.drinks);
+        _drinks.addAll(ingridientsResponse?.drinks ?? []);
 
         bool shortMode = context.heightPx <= 800;
         final double bottomHeight =
@@ -94,7 +106,7 @@ class _IngridientsPageState extends State<IngridientsPage> {
         );
 
         _pageController?.addListener(_handlePageChanged);
-        final pages = ingridientsResponse.drinks.map((e) {
+        final pages = ingridientsResponse?.drinks.map((e) {
           return Padding(
             padding: const EdgeInsets.all(10),
             child: _DoubleBorderImage(e),
@@ -143,7 +155,7 @@ class _IngridientsPageState extends State<IngridientsPage> {
             PageView.builder(
               controller: _pageController,
               itemBuilder: (_, index) {
-                final wrappedIndex = index % pages.length;
+                final wrappedIndex = index % pages!.length;
                 final child = pages[wrappedIndex];
                 return ValueListenableBuilder<double>(
                   valueListenable: _currentPage,
@@ -192,7 +204,7 @@ class _IngridientsPageState extends State<IngridientsPage> {
       }, error: (error) {
         return Scaffold(body: customErrorWidget(() {
           return ref.refresh(randomCocktailProvider);
-        }));
+        }, context: context));
       });
     }));
   }

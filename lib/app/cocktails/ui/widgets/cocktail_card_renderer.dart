@@ -13,7 +13,7 @@ class CocktailCardRenderer extends StatelessWidget {
   final double offset;
   final double cardWidth;
   final double cardHeight;
-  final Drinks cocktail;
+  final dynamic cocktail;
 
   const CocktailCardRenderer(this.offset, {Key? key, this.cardWidth = 250, required this.cocktail,
     required this.cardHeight}) : super(key: key);
@@ -46,7 +46,7 @@ class CocktailCardRenderer extends StatelessWidget {
             onTap: () => context.push(ScreenPaths.cocktailDetails(cocktail.idDrink)),
             child:  _buildCocktailImage())),
           // City information
-           Gap($dimensions.insets.xl),
+           Gap($dimensions.insets.xxl),
           _buildCocktailData()
         ],
       ),
@@ -78,8 +78,9 @@ class CocktailCardRenderer extends StatelessWidget {
       children: <Widget>[
         // The sized box mock the space of the city image
         SizedBox(width: double.infinity, height: cardHeight * .40),
+        Gap($dimensions.insets.xxl),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
           child: Text(cocktail.strDrink,
           textAlign: TextAlign.center,
           style: const TextStyle(
