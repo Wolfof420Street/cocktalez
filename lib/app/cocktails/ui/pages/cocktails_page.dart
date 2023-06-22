@@ -1,6 +1,6 @@
-import 'package:cocktalez/app/cocktails/data/model/cocktail_full_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/cocktails/ui/widgets/alcohol_cocktails.dart';
+import 'package:cocktalez/app/cocktails/ui/widgets/popular_cocktails.dart';
 import 'package:cocktalez/app/search/ui/pages/search_cocktail_page.dart';
 import 'package:cocktalez/main.dart';
 
@@ -158,12 +158,12 @@ class _CocktailsPageState extends State<CocktailsPage>
           ],
         ),
         Gap($dimensions.insets.xl),
-        Container(
+        SizedBox(
           height: 400,
           child: TabBarView(
             controller: _tabController,
             children: const [
-              AlcoholicCocktails(),
+              PopularCocktails(),
               AlcoholicCocktails(),
               NonAlcoholicCocktails(),
             ],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AppPageIndicator extends StatefulWidget {
-  AppPageIndicator({
+  const AppPageIndicator({
     Key? key,
     required this.count,
     required this.controller,

@@ -40,6 +40,25 @@ class CocktailService {
     }
   }
 
+
+  getPopularCocktails() async {
+    try {
+      var response =
+          await dio.get('${Endpoints.baseUrl}${Endpoints.popular}');
+
+      if (response.statusCode == 200) {
+        FullCocktailResponse cocktailResponse =
+            FullCocktailResponse.fromJson(response.data);
+
+        return cocktailResponse;
+      } else {
+        return Failure(response.statusMessage);
+      }
+    } catch (e) {
+      return Failure('$e');
+    }
+  }
+
   getNonAlcoholicCocktails() async {
     try {
       var response = await dio

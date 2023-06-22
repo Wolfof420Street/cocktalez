@@ -13,7 +13,7 @@ class CocktailCardRenderer extends StatelessWidget {
   final double offset;
   final double cardWidth;
   final double cardHeight;
-  final Drinks cocktail;
+  final dynamic cocktail;
 
   const CocktailCardRenderer(this.offset, {Key? key, this.cardWidth = 250, required this.cocktail,
     required this.cardHeight}) : super(key: key);
