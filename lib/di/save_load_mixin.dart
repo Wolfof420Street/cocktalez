@@ -12,6 +12,7 @@ mixin ThrottledSaveLoadMixin {
       copyFromJson(results);
     } on Exception catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
   }
 
@@ -21,6 +22,7 @@ mixin ThrottledSaveLoadMixin {
       await _file.save(toJson());
     } on Exception catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
   }
 

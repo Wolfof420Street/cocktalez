@@ -45,7 +45,7 @@ class _CocktailDetailsPageState extends State<CocktailDetailsPage> {
           cocktail = fullCocktailResponse.drinks[0];
         }
 
-        late Widget content;
+        Widget content;
 
         bool hzMode = context.isLandscape;
 

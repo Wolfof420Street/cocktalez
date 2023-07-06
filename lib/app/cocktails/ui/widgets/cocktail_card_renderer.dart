@@ -1,4 +1,3 @@
-import 'package:cocktalez/app/cocktails/data/model/cocktail_response.dart';
 import 'package:cocktalez/constants/router.dart';
 import 'package:cocktalez/main.dart';
 

@@ -12,7 +12,7 @@ final searchService = Provider<SearchService>((ref) {
 });
 
 class SearchService {
-  Dio dio;
+  final Dio dio;
 
   SearchService(this.dio);
 

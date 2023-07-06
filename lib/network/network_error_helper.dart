@@ -3,37 +3,37 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class NetworkErrorHandler {
-  static String handleError(DioError err) {
-    String errorMessage = '';
+  static String handleError(DioException err) {
+    String errorMessage = 'Unknown Error.';
 
     switch (err.runtimeType) {
-      case DioError:
+      case DioException:
         switch (err.type) {
-          case DioErrorType.cancel:
+          case DioExceptionType.cancel:
             errorMessage = 'Request was cancelled';
             break;
-          case DioErrorType.connectionTimeout:
+          case DioExceptionType.connectionTimeout:
             errorMessage = 'Connection timeout';
             break;
-          case DioErrorType.connectionError:
+          case DioExceptionType.connectionError:
             errorMessage = 'Something went wrong';
             break;
-          case DioErrorType.receiveTimeout:
+          case DioExceptionType.receiveTimeout:
             errorMessage = 'Receive timeout in connection';
             break;
-          case DioErrorType.badResponse:
+          case DioExceptionType.badResponse:
             errorMessage =
             'Received invalid status code: ${err.response?.statusCode}';
             break;
-          case DioErrorType.sendTimeout:
+          case DioExceptionType.sendTimeout:
             errorMessage = 'Send timeout in connection';
             break;
 
-          case DioErrorType.badCertificate:
+          case DioExceptionType.badCertificate:
           
             errorMessage = 'Invalid certificate';
             break;
-          case DioErrorType.unknown:
+          case DioExceptionType.unknown:
             errorMessage = 'Unexpected error occured';
             break;
         }
