@@ -7,6 +7,7 @@ import 'package:cocktalez/app/cocktails/data/model/ingridients_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/components/error_widget.dart';
 import 'package:cocktalez/constants/failure.dart';
+import 'package:cocktalez/di/intro_logic.dart';
 import 'package:cocktalez/main.dart';
 import 'package:extra_alignments/extra_alignments.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +18,11 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sized_context/sized_context.dart';
 
-import '../../../../constants/app_icons.dart';
 import '../../../../constants/router.dart';
 import '../../../components/app_header.dart';
 import '../../../components/app_image.dart';
 import '../../../components/app_indicator.dart';
 import '../../../components/buttons.dart';
-import '../../../components/circle_buttons.dart';
 import '../../../components/static_text_scale.dart';
 
 part '../widgets/_blurred_image_bg.dart';

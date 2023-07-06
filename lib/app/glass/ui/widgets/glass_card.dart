@@ -1,4 +1,3 @@
-import 'dart:math';
 
 
 import 'package:cocktalez/app/cocktails/data/model/glass_response.dart';
@@ -37,6 +36,7 @@ class GlassCard extends StatefulWidget {
 class _GlassCardState extends State<GlassCard> with TickerProviderStateMixin {
   bool _wasOpen = false;
   late Animation<double> _fillTween;
+  // ignore: unused_field
   late Animation<double> _pointsTween;
   late AnimationController _liquidSimController;
 

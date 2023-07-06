@@ -15,6 +15,7 @@ import '../../../cocktails/provider/cocktail_provider.dart';
 import '../../../components/app_header.dart';
 import '../../../components/app_image.dart';
 import '../../../components/buttons.dart';
+import '../../../components/error_widget.dart';
 import '../../../components/scroll_decorator.dart';
 
 part '../widgets/_search_tile.dart';
@@ -23,25 +24,30 @@ part '../widgets/_search_cocktail_grid.dart';
 class CocktailSearchScreen extends StatelessWidget {
   final String searchQuery;
 
-  const CocktailSearchScreen({Key? key, required this.searchQuery}) : super(key: key);
+  const CocktailSearchScreen({Key? key, required this.searchQuery})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (ctx, ref, child) {
       return ref.watch(searchCocktailsProvider(searchQuery)).when(
-        data: (searchCocktailsResponse) {
-          return SearchCocktailsResult(
-            searchCocktailsResponse: searchCocktailsResponse,
-            onPressed: (drink) => context.push(ScreenPaths.cocktailDetails(drink.idDrink)),
+            data: (searchCocktailsResponse) {
+              return searchCocktailsResponse is FullCocktailResponse ? SearchCocktailsResult(
+                searchCocktailsResponse: searchCocktailsResponse,
+                onPressed: (drink) =>
+                    context.push(ScreenPaths.cocktailDetails(drink.idDrink)),
+              ) : const Center(
+                child: Text(
+                'No Cocktail Found with this name'
+              ));
+            },
+            loading: () => Center(
+              child: Lottie.asset('assets/anim/intro_loading.json'),
+            ),
+            error: (_, __) => customErrorWidget(() {
+              return ref.refresh(searchCocktailsProvider(searchQuery));
+            }),
           );
-        },
-        loading: () =>  Center(
-            child: Lottie.asset('assets/anim/intro_loading.json'),
-          ),
-        error: (_, __) => ErrorWidget(
-          ref.refresh(randomCocktailProvider),
-        ),
-      );
     });
   }
 }
@@ -80,15 +86,14 @@ class SearchCocktailsResult extends StatelessWidget {
                       ),
                     ),
                   )
-                :
-            Expanded(
-              child: RepaintBoundary(
-                child: SearchCocktailGrid(
-                  cocktailResponse: searchCocktailsResponse,
-                  onPressed: onPressed,
-                ),
-              ),
-            ),
+                : Expanded(
+                    child: RepaintBoundary(
+                      child: SearchCocktailGrid(
+                        cocktailResponse: searchCocktailsResponse,
+                        onPressed: onPressed,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

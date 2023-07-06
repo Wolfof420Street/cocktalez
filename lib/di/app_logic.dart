@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/page_route.dart';
 import '../constants/router.dart';
+
+final appLogicProvider = Provider<AppLogic>((ref) => AppLogic());
 
 class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.

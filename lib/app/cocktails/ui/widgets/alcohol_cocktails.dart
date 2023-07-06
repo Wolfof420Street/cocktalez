@@ -33,6 +33,13 @@ class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
   Tween<double>? _tween;
   Animation<double>? _tweenAnim;
 
+   @override
+  void dispose() {
+    super.dispose();
+
+   _tweenController?.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

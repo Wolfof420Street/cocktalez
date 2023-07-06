@@ -2,16 +2,19 @@ class GlassResponse {
   GlassResponse({
     required this.drinks,
   });
-  late final List<Drinks> drinks;
-  
-  GlassResponse.fromJson(Map<String, dynamic> json){
-    drinks = List.from(json['drinks']).map((e)=>Drinks.fromJson(e)).toList();
+
+  factory GlassResponse.fromJson(Map<String, dynamic> json) {
+    return GlassResponse(
+      drinks: List<Drinks>.from(json['drinks'].map((e) => Drinks.fromJson(e))),
+    );
   }
 
+  List<Drinks> drinks;
+
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['drinks'] = drinks.map((e)=>e.toJson()).toList();
-    return data;
+    return {
+      'drinks': drinks.map((e) => e.toJson()).toList(),
+    };
   }
 }
 
@@ -19,15 +22,18 @@ class Drinks {
   Drinks({
     required this.strGlass,
   });
-  late final String strGlass;
-  
-  Drinks.fromJson(Map<String, dynamic> json){
-    strGlass = json['strGlass'];
+
+  factory Drinks.fromJson(Map<String, dynamic> json) {
+    return Drinks(
+      strGlass: json['strGlass'],
+    );
   }
 
+  String strGlass;
+
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['strGlass'] = strGlass;
-    return data;
+    return {
+      'strGlass': strGlass,
+    };
   }
 }

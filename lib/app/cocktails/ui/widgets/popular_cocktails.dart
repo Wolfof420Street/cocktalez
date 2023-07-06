@@ -1,4 +1,3 @@
-
 import 'package:cocktalez/app/cocktails/data/model/cocktail_full_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/cocktails/ui/widgets/rotation_3d.dart';
@@ -32,6 +31,14 @@ class _PopularCocktailsState extends State<PopularCocktails>
   Tween<double>? _tween;
   Animation<double>? _tweenAnim;
 
+ 
+   @override
+  void dispose() {
+    super.dispose();
+
+    _tweenController?.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -171,7 +178,8 @@ class _PopularCocktailsState extends State<PopularCocktails>
           ),
         );
       }, error: (error) {
-        return Scaffold(body: customErrorWidget(() {
+        return Scaffold(
+            body: customErrorWidget(() {
           return ref.refresh(alcoholicCocktailsProvider);
         }, context: context));
       });

@@ -39,7 +39,7 @@ class LoggingInterceptor extends Interceptor {
 
   @override
   FutureOr<dynamic> onError(
-      DioError err,
+      DioException err,
       ErrorInterceptorHandler handler,
       ) async {
     debugPrint("| Error: [code ${err.response?.statusCode ?? 0}]");

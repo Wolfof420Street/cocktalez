@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:cocktalez/constants/router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart' as g;
 
-import '../app/components/custom_error_dialog.dart';
 import 'network_error_helper.dart';
 
 class AppInterceptors extends Interceptor {
@@ -38,24 +35,24 @@ class AppInterceptors extends Interceptor {
   ) async {
     if (err.response?.statusCode == 401) {
     
-      return;
+      return err.response?.statusMessage;
     } else if (err.response?.statusCode == 403) {
      
-      return;
+     return err.response?.statusMessage;
     } else if (err.response?.statusCode == 404) {
       
-      return;
+     return err.response?.statusMessage;
     } else if (err.response?.statusCode == 500) {
       
-      return;
+     return err.response?.statusMessage;
     } else if (err.response?.statusCode == 503) {
       
-      return;
+     return err.response?.statusMessage;
     }
 
     String errorMessage = NetworkErrorHandler.handleError(err);
 
-    print("Network Error message $errorMessage");
+    debugPrint("Network Error message $errorMessage");
 
     return handler.next(err);
   }
