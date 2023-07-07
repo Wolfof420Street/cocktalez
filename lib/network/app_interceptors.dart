@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:cocktalez/constants/router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart' as g;
 
-import '../app/components/custom_error_dialog.dart';
 import 'network_error_helper.dart';
 
 class AppInterceptors extends Interceptor {
@@ -33,21 +30,29 @@ class AppInterceptors extends Interceptor {
 
   @override
   FutureOr<dynamic> onError(
-    DioError err,
+    DioException err,
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
     
-
-      Navigator.pushNamedAndRemoveUntil(
-          g.Get.context!, ScreenPaths.splash, (route) => false);
-
-      return;
+      return err.response?.statusMessage;
+    } else if (err.response?.statusCode == 403) {
+     
+     return err.response?.statusMessage;
+    } else if (err.response?.statusCode == 404) {
+      
+     return err.response?.statusMessage;
+    } else if (err.response?.statusCode == 500) {
+      
+     return err.response?.statusMessage;
+    } else if (err.response?.statusCode == 503) {
+      
+     return err.response?.statusMessage;
     }
 
     String errorMessage = NetworkErrorHandler.handleError(err);
 
-    showErrorDialog(g.Get.context!, errorMessage);
+    debugPrint("Network Error message $errorMessage");
 
     return handler.next(err);
   }

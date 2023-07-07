@@ -1,8 +1,13 @@
 import 'package:cocktalez/constants/platform_info.dart';
 import 'package:cocktalez/di/save_load_mixin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
+
+final introLogicProvider = Provider<IntroLogic>((ref) => IntroLogic());
 class IntroLogic with ThrottledSaveLoadMixin {
+ 
   late final hasCompletedOnboarding = ValueNotifier<bool>(false)
     ..addListener(scheduleSave);
   late final hasDismissedSearchMessage = ValueNotifier<bool>(false)

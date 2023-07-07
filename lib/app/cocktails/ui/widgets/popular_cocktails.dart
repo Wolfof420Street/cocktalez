@@ -1,23 +1,21 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
+import 'package:cocktalez/app/cocktails/data/model/cocktail_full_response.dart';
 import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
-import 'package:cocktalez/app/cocktails/ui/widgets/cocktail_card_renderer.dart';
 import 'package:cocktalez/app/cocktails/ui/widgets/rotation_3d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../components/error_widget.dart';
-import '../../data/model/cocktail_response.dart';
+import 'cocktail_card_renderer.dart';
 
-class AlcoholicCocktails extends StatefulWidget {
-  const AlcoholicCocktails({super.key});
+class PopularCocktails extends StatefulWidget {
+  const PopularCocktails({super.key});
 
   @override
-  State<AlcoholicCocktails> createState() => _AlcoholicCocktailsState();
+  State<PopularCocktails> createState() => _PopularCocktailsState();
 }
 
-class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
+class _PopularCocktailsState extends State<PopularCocktails>
     with SingleTickerProviderStateMixin {
   final double _maxRotation = 20;
 
@@ -33,13 +31,14 @@ class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
   Tween<double>? _tween;
   Animation<double>? _tweenAnim;
 
+ 
    @override
   void dispose() {
     super.dispose();
 
-   _tweenController?.dispose();
+    _tweenController?.dispose();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -56,13 +55,13 @@ class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
         initialPage: 1, viewportFraction: _cardWidth / size.width);
 
     return Consumer(builder: (ctx, ref, child) {
-      return ref.watch(alcoholicCocktailsProvider).map(
+      return ref.watch(popularCocktailsProvider).map(
           data: (alcoholicCocktailAsyncValue) {
-        CocktailResponse? cocktailResponse;
+        FullCocktailResponse? cocktailResponse;
 
         var value = alcoholicCocktailAsyncValue.value;
 
-        if (value is CocktailResponse) {
+        if (value is FullCocktailResponse) {
           cocktailResponse = value;
         }
 
@@ -179,7 +178,8 @@ class _AlcoholicCocktailsState extends State<AlcoholicCocktails>
           ),
         );
       }, error: (error) {
-        return Scaffold(body: customErrorWidget(() {
+        return Scaffold(
+            body: customErrorWidget(() {
           return ref.refresh(alcoholicCocktailsProvider);
         }, context: context));
       });

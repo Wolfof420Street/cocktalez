@@ -1,28 +1,30 @@
 class IngridientsResponse {
-  IngridientsResponse({
-    required this.drinks,
-  });
-  late final List<Drinks> drinks;
-  
-  IngridientsResponse.fromJson(Map<String, dynamic> json){
-    drinks = List.from(json['drinks']).map((e)=>Drinks.fromJson(e)).toList();
+  late List<Drinks> drinks;
+
+  IngridientsResponse({required this.drinks});
+
+  factory IngridientsResponse.fromJson(Map<String, dynamic> json) {
+    return IngridientsResponse(
+      drinks: List<Drinks>.from(json['drinks'].map((e) => Drinks.fromJson(e))),
+    );
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['drinks'] = drinks.map((e)=>e.toJson()).toList();
+    data['drinks'] = drinks.map((e) => e.toJson()).toList();
     return data;
   }
 }
 
 class Drinks {
-  Drinks({
-    required this.strIngredient1,
-  });
-  late final String strIngredient1;
-  
-  Drinks.fromJson(Map<String, dynamic> json){
-    strIngredient1 = json['strIngredient1'];
+  late String strIngredient1;
+
+  Drinks({required this.strIngredient1});
+
+  factory Drinks.fromJson(Map<String, dynamic> json) {
+    return Drinks(
+      strIngredient1: json['strIngredient1'],
+    );
   }
 
   Map<String, dynamic> toJson() {

@@ -1,8 +1,9 @@
 import 'package:cocktalez/app/cocktails/ui/pages/cocktails_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/glasses_page.dart';
 import 'package:cocktalez/app/components/fluid_nav_bar/fluid_nav_bar.dart';
-import 'package:cocktalez/app/ingridients/ui/pages/ingredients_page.dart';
 import 'package:flutter/material.dart';
+
+import '../../../ingredients/ui/pages/ingredients_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -23,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-    void _handleNavigationChange(int index) {
+  void _handleNavigationChange(int index) {
     setState(() {
       switch (index) {
         case 0:

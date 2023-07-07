@@ -121,15 +121,6 @@ class LiquidPainter extends CustomPainter {
     canvas.scale(1/simulation.hzScale, 1);
   }
 
-  void _drawOffsets(LiquidSimulation simulation, Canvas canvas, Size size) {
-    var floor = size.height;
-    simulation1.endPts.forEach((pt) {
-      canvas.drawCircle(sizeOffset(pt, size), 4, Paint()..color = Colors.red);
-    });
-    simulation1.ctrlPts.forEach((pt) {
-      canvas.drawCircle(sizeOffset(pt, size), 4, Paint()..color = Colors.green);
-    });
-  }
 
   Offset sizeOffset(Offset pt, Size size) {
     return Offset(pt.dx * size.width, waveHeight * pt.dy );

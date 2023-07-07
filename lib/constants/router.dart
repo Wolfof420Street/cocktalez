@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:cocktalez/app/cocktails/ui/pages/cocktail_details_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/home_page.dart';
-import 'package:cocktalez/app/ingridients/ui/pages/cocktails_by_ingridient_page.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../app/glass/ui/pages/cocktail_by_glass_page.dart';
+import '../app/ingredients/ui/pages/cocktails_by_ingridient_page.dart';
 import '../app/intro/intro_screen.dart';
 import '../main.dart';
 

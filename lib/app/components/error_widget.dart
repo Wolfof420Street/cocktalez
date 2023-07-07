@@ -34,7 +34,6 @@ Widget customErrorWidget(VoidCallback onRefresh, {BuildContext? context}) {
                 style: TextStyle(fontSize: 16.sp,
                ),),
           ),
-          const Spacer(),
           Container(
             height: 54.h,
             margin: const EdgeInsets.all(15),
@@ -42,7 +41,11 @@ Widget customErrorWidget(VoidCallback onRefresh, {BuildContext? context}) {
               onPressed: () { 
                  onRefresh();
                },
-              child: const Text('Retry'),
+              child: Text('Retry', style: Theme.of(context!).textTheme.bodyLarge?.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              )),
             ),
           )
         ],
@@ -51,7 +54,7 @@ Widget customErrorWidget(VoidCallback onRefresh, {BuildContext? context}) {
         top: kToolbarHeight,
         right: 20.w,
         child: InkWell(
-          onTap: () => Navigator.pop(context!),
+          onTap: () => Navigator.pop(context),
           child: const Icon(
             Icons.close,
             color: AppColors.primary,
