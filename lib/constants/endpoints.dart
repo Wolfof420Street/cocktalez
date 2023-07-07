@@ -1,10 +1,8 @@
-
-
 import '../utils/config.dart';
 
 class Endpoints {
 // Access the API key
-  
+
   static String baseUrl = 'https://www.thecocktaildb.com/api/json/v2/$apiKey';
 
   static String getAlcoholicCocktails = '/filter.php?a=Alcoholic';
@@ -17,7 +15,7 @@ class Endpoints {
 
   static String getIngridients = '/list.php?i=list';
 
-  static String getCocktailDetails = '/lookup.php';
+  static String getCocktailDetails = '/lookup.php/lookup.php';
 
   static String searchCocktailByName = '/search.php';
 
@@ -28,5 +26,4 @@ class Endpoints {
   static String search = '/search.php';
 
   static String popular = '/popular.php';
-  
 }
