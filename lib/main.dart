@@ -28,6 +28,7 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
+  
   await SentryFlutter.init(
     (options) {
       options.dsn = sentryDsn;
