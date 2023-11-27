@@ -1,15 +1,10 @@
 import 'package:cocktalez/app/cocktails/data/model/cocktail_full_response.dart';
 import 'package:cocktalez/constants/failure.dart';
-import 'package:cocktalez/network/network_provider.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/endpoints.dart';
 
-final searchService = Provider<SearchService>((ref) {
-  var dio = ref.read(networkProvider);
-  return SearchService(dio);
-});
+
 
 class SearchService {
   final Dio dio;

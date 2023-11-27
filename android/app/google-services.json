@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "382849249806",
+    "project_id": "cocktail-party-7c7b8",
+    "storage_bucket": "cocktail-party-7c7b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382849249806:android:e9fd1bca32ef12a719025f",
+        "android_client_info": {
+          "package_name": "com.wolf.cocktailparty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382849249806-lvom7t9p8fktigfcod5pi76b3d9p7jp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvTpum9avMsdiKev7GkNIThi3ka4LE_jQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382849249806-9jc6q0ok1krfgf17os14vdl7cgml6vqo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "382849249806-81i603r17ss4d444ef8ghlib85u4ofom.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cocktalez"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382849249806:android:56a2e727944f9b2119025f",
+        "android_client_info": {
+          "package_name": "com.wolf.cocktalez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382849249806-lvom7t9p8fktigfcod5pi76b3d9p7jp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvTpum9avMsdiKev7GkNIThi3ka4LE_jQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382849249806-9jc6q0ok1krfgf17os14vdl7cgml6vqo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "382849249806-81i603r17ss4d444ef8ghlib85u4ofom.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cocktalez"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

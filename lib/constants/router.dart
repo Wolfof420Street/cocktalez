@@ -80,10 +80,10 @@ class AppRoute extends GoRoute {
 
 FutureOr<String?> _handleRedirect(BuildContext context, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
+  if (!appLogic.isBootstrapComplete && state.path != ScreenPaths.splash) {
     return ScreenPaths.splash;
   }
-  debugPrint('Navigate to: ${state.location}');
+  debugPrint('Navigate to: ${state.path}');
   return null; // do nothing
 }
   

@@ -1,5 +1,6 @@
 import 'package:cocktalez/app/cocktails/data/model/cocktail_response.dart';
-import 'package:cocktalez/app/cocktails/data/remote/cocktail_service.dart';
+import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
+
 import 'package:riverpod/riverpod.dart';
 
 final glassesProvider = FutureProvider((ref) async {
@@ -10,9 +11,11 @@ final glassesProvider = FutureProvider((ref) async {
 
 final cocktailByGlassProvider = FutureProvider.family<CocktailResponse, String>(
   (ref, glass) async {
-    final cocktailsByGlass =
-        await ref.watch(cocktailServiceProvider).getCocktailsByGlass(glass);
-
-    return cocktailsByGlass;
+    var result = await ref.watch(cocktailServiceProvider).getCocktailsByGlass(glass);
+    if (result.isSuccess) {
+      return result.data;
+    } else {
+      throw Exception(result.error.errorMessage);
+    }
   },
 );

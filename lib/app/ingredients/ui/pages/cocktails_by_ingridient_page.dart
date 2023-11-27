@@ -30,7 +30,7 @@ class CocktailsByIngridientPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (ctx, ref, child) {
-      return ref.watch(cocktailByIngridientProvider(ingridient)).map(
+      return ref.watch(cocktailByIngredientProvider(ingridient)).map(
           data: (cocktailByIngridientAsyncValue) {
         CocktailResponse cocktailResponse =
             cocktailByIngridientAsyncValue.value;
@@ -39,8 +39,7 @@ class CocktailsByIngridientPage extends StatelessWidget {
           onTap: FocusManager.instance.primaryFocus?.unfocus,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            AppHeader(
-                title: '', subtitle: '$ingridient cocktails'),
+            AppHeader(title: '', subtitle: '$ingridient cocktails'),
             Expanded(
                 child: RepaintBoundary(
                     child: CocktailByIngrientGrid(
@@ -65,8 +64,9 @@ class CocktailsByIngridientPage extends StatelessWidget {
           ),
         );
       }, error: (error) {
-        return Scaffold(body: customErrorWidget(() {
-          return ref.refresh(cocktailByIngridientProvider(ingridient));
+        return Scaffold(
+            body: customErrorWidget(() {
+          return ref.refresh(cocktailByIngredientProvider(ingridient));
         }, context: context));
       });
     });
