@@ -72,7 +72,7 @@ class _GlassesPageState extends State<GlassesPage> {
           }, context: context));
         } 
 
-        _glassResponse = glasses;
+        _glassResponse = glasses.data;
 
         return  Scaffold(
           appBar: PreferredSize(

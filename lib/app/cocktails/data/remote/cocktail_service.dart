@@ -7,235 +7,101 @@ import 'package:cocktalez/constants/endpoints.dart';
 import 'package:cocktalez/constants/failure.dart';
 import 'package:dio/dio.dart';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../network/network_provider.dart';
-
-final cocktailServiceProvider = Provider<CocktailService>((ref) {
-  var dio = ref.read(networkProvider);
-  return CocktailService(dio);
-});
 
 class CocktailService {
-  Dio dio;
+  final Dio dio;
 
   CocktailService(this.dio);
 
-  getAlcoholicCocktails() async {
+  Future<Result<T, Failure>> _getGenericCocktailResponse<T>(
+      String endpoint, T Function(dynamic data) fromJson,
+      {Map<String, dynamic>? queryParameters}) async {
     try {
-      var response = await dio
-          .get('${Endpoints.baseUrl}${Endpoints.getAlcoholicCocktails}');
+      var response = await dio.get('${Endpoints.baseUrl}$endpoint',
+          queryParameters: queryParameters);
 
       if (response.statusCode == 200) {
-        CocktailResponse cocktailResponse =
-            CocktailResponse.fromJson(response.data);
-
-        return cocktailResponse;
+        T result = fromJson(response.data);
+        return Result.success(result);
       } else {
-        return Failure(response.statusMessage);
+        return Result.failure(
+            Failure(response.statusMessage, type: "HTTP Error"));
       }
     } catch (e) {
-      return Failure('$e');
+      return Result.failure(Failure(e.toString(), type: "Exception"));
     }
   }
 
-
-  getPopularCocktails() async {
-    try {
-      var response =
-          await dio.get('${Endpoints.baseUrl}${Endpoints.popular}');
-
-      if (response.statusCode == 200) {
-        FullCocktailResponse cocktailResponse =
-            FullCocktailResponse.fromJson(response.data);
-
-        return cocktailResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<CocktailResponse, Failure>> getAlcoholicCocktails() async {
+    return _getGenericCocktailResponse(
+        Endpoints.getAlcoholicCocktails, (data) => CocktailResponse.fromJson(data));
   }
 
-  getNonAlcoholicCocktails() async {
-    try {
-      var response = await dio
-          .get('${Endpoints.baseUrl}${Endpoints.getNonAlcoholicCocktails}');
-
-      if (response.statusCode == 200) {
-        CocktailResponse cocktailResponse =
-            CocktailResponse.fromJson(response.data);
-
-        return cocktailResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<FullCocktailResponse, Failure>> getPopularCocktails() async {
+    return _getGenericCocktailResponse(Endpoints.popular, (data) => FullCocktailResponse.fromJson(data));
   }
 
-  getCategories() async {
-    try {
-      var response =
-          await dio.get("${Endpoints.baseUrl}${Endpoints.getCategories}");
-
-      if (response.statusCode == 200) {
-        CategoryResponse categoryResponse =
-            CategoryResponse.fromJson(response.data);
-
-        return categoryResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<CocktailResponse, Failure>> getNonAlcoholicCocktails() async {
+    return _getGenericCocktailResponse(Endpoints.getNonAlcoholicCocktails, (data) => CocktailResponse.fromJson(data));
   }
 
-  getGlasses() async {
-    try {
-      var response =
-          await dio.get('${Endpoints.baseUrl}${Endpoints.getGlasses}');
-
-      if (response.statusCode == 200) {
-        GlassResponse glassResponse = GlassResponse.fromJson(response.data);
-
-        return glassResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<CategoryResponse, Failure>> getCategories() async {
+    return _getGenericCocktailResponse(Endpoints.getCategories, (data) => CategoryResponse.fromJson(data));
   }
 
-  getIngridients() async {
-    try {
-      var response =
-          await dio.get('${Endpoints.baseUrl}${Endpoints.getIngridients}');
-
-      if (response.statusCode == 200) {
-        IngridientsResponse glassResponse =
-            IngridientsResponse.fromJson(response.data);
-
-        return glassResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<GlassResponse, Failure>> getGlasses() async {
+    return _getGenericCocktailResponse(Endpoints.getGlasses, (data) => GlassResponse.fromJson(data));
   }
 
-  getRandomCocktail() async {
-    try {
-      var response =
-          await dio.get('${Endpoints.baseUrl}${Endpoints.getRandomCocktail}');
-
-      if (kDebugMode) {
-        print("Response : ${response.data}");
-      }
-
-      if (response.statusCode == 200) {
-        FullCocktailResponse fullCocktailResponse =
-            FullCocktailResponse.fromJson(response.data);
-        if (kDebugMode) {
-          print('Cocktail Response : ${fullCocktailResponse.toJson()}');
-        }
-        return fullCocktailResponse;
-      } else {
-        if (kDebugMode) {
-          print('Failure : ${response.statusMessage}');
-        }
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Failure : $e');
-      }
-      return Failure('$e');
-    }
+  Future<Result<IngridientsResponse, Failure>> getIngridients() async {
+    return _getGenericCocktailResponse(Endpoints.getIngridients, (data) => IngridientsResponse.fromJson(data));
   }
 
-  getCocktailDetails(String id) async {
-    try {
-      var response = await dio.get(
-          '${Endpoints.baseUrl}${Endpoints.getCocktailDetails}',
-          queryParameters: {'i': id});
-
-      if (response.statusCode == 200) {
-        FullCocktailResponse fullCocktailResponse =
-            FullCocktailResponse.fromJson(response.data);
-
-        return fullCocktailResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<FullCocktailResponse, Failure>> getRandomCocktail() async {
+    return _getGenericCocktailResponse(Endpoints.getRandomCocktail, (data) => FullCocktailResponse.fromJson(data));
   }
 
-  getCocktailsByGlass(String glass) async {
-    try {
-      var response = await dio.get(
-          '${Endpoints.baseUrl}${Endpoints.filterCocktail}',
-          queryParameters: {'g': glass});
-
-      if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse =
-            CocktailResponse.fromJson(response.data);
-
-        return fullCocktailResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<FullCocktailResponse, Failure>> getCocktailDetails(
+      String id) async {
+    return _getGenericCocktailResponse(Endpoints.getCocktailDetails,
+        (data) => FullCocktailResponse.fromJson(data),
+        queryParameters: {'i': id});
   }
 
-  getCocktailsByCategory(String category) async {
-    try {
-      var response = await dio.get(
-          '${Endpoints.baseUrl}${Endpoints.filterCocktail}',
-          queryParameters: {'c': category});
-
-      if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse =
-            CocktailResponse.fromJson(response.data);
-
-        return fullCocktailResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<CocktailResponse, Failure>> getCocktailsByGlass(
+      String glass) async {
+    return _getGenericCocktailResponse(Endpoints.filterCocktail,
+        (data) => CocktailResponse.fromJson(data),
+        queryParameters: {'g': glass});
   }
 
-  getCocktailsByIngredient(String ingridient) async {
-    try {
-      var response = await dio.get(
-          '${Endpoints.baseUrl}${Endpoints.filterCocktail}',
-          queryParameters: {'i': ingridient});
-
-      if (response.statusCode == 200) {
-        CocktailResponse fullCocktailResponse =
-            CocktailResponse.fromJson(response.data);
-
-        return fullCocktailResponse;
-      } else {
-        return Failure(response.statusMessage);
-      }
-    } catch (e) {
-      return Failure('$e');
-    }
+  Future<Result<CocktailResponse, Failure>> getCocktailsByCategory(
+      String category) async {
+    return _getGenericCocktailResponse(Endpoints.filterCocktail,
+        (data) => CocktailResponse.fromJson(data),
+        queryParameters: {'c': category});
   }
 
-  
+  Future<Result<CocktailResponse, Failure>> getCocktailsByIngredient(
+      String ingredient) async {
+    return _getGenericCocktailResponse(Endpoints.filterCocktail,
+       (data) => CocktailResponse.fromJson(data),
+        queryParameters: {'i': ingredient});
+  }
+}
 
- }
+class Result<T, E> {
+  final T? _data;
+  final E? _error;
+
+  Result._(this._data, this._error);
+
+  factory Result.success(T data) => Result._(data, null);
+  factory Result.failure(E error) => Result._(null, error);
+
+  T get data => _data!;
+  E get error => _error!;
+
+  bool get isSuccess => _data != null;
+  bool get isFailure => _error != null;
+}

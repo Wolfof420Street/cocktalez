@@ -69,22 +69,20 @@ class _IngridientsPageState extends State<IngridientsPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: ((context, ref, child) {
-      return ref.watch(ingridientsProvider).map(data: (ingridientsAsyncValue) {
-         var val = ingridientsAsyncValue.value;
+      return ref.watch(ingredientsProvider).map(data: (ingridientsAsyncValue) {
+        var val = ingridientsAsyncValue.value;
 
-         if(val is Failure) {
-            debugPrint("Failure");
-            return customErrorWidget(() { 
-              return ref.refresh(ingridientsProvider);
-            }, context: context);
-
-         }  else if(val is IngridientsResponse) {
-           ingridientsResponse = val;
-         }
+        if (val is Failure) {
+          debugPrint("Failure");
+          return customErrorWidget(() {
+            return ref.refresh(ingredientsProvider);
+          }, context: context);
+        } else {
+          ingridientsResponse = val;
+        }
 
         _drinks.clear();
         _drinks.addAll(ingridientsResponse?.drinks ?? []);
@@ -97,7 +95,6 @@ class _IngridientsPageState extends State<IngridientsPage> {
         double itemHeight =
             (context.heightPx - 200 - bottomHeight).clamp(250, 400);
         double itemWidth = itemHeight * .666;
-        // TODO: This could be optimized to only run if the size has changed...is it worth it?
         _pageController?.dispose();
         _pageController = PageController(
           viewportFraction: itemWidth / context.widthPx,
@@ -132,8 +129,6 @@ class _IngridientsPageState extends State<IngridientsPage> {
 
         return Stack(
           children: [
-           
-           
             /// Blurred Bg
             Positioned.fill(
               child: ValueListenableBuilder<num>(
@@ -190,7 +185,6 @@ class _IngridientsPageState extends State<IngridientsPage> {
               title: 'Ingridients',
               showBackBtn: false,
               isTransparent: true,
-            
             ),
           ],
         );
@@ -201,7 +195,8 @@ class _IngridientsPageState extends State<IngridientsPage> {
           ),
         );
       }, error: (error) {
-        return Scaffold(body: customErrorWidget(() {
+        return Scaffold(
+            body: customErrorWidget(() {
           return ref.refresh(randomCocktailProvider);
         }, context: context));
       });

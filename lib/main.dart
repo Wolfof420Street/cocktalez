@@ -1,4 +1,3 @@
-
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cocktalez/app/components/app_scaffold.dart';
 import 'package:cocktalez/constants/app_colors.dart';
@@ -18,29 +17,22 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'constants/router.dart';
 import 'di/intro_logic.dart';
 
-
-
 Future<void> main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
-   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
-  
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
-  
-  await SentryFlutter.init(
-    (options) {
-      options.dsn = sentryDsn;
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production.
-      options.tracesSampleRate = 1.0;
-    },
-    appRunner: () => runApp(ProviderScope(child: MyApp(savedThemeMode: savedThemeMode)))
 
-  );
+  await SentryFlutter.init((options) {
+    options.dsn = sentryDsn;
+    // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+    // We recommend adjusting this value in production.
+    options.tracesSampleRate = 1.0;
+  },
+      appRunner: () =>
+          runApp(ProviderScope(child: MyApp(savedThemeMode: savedThemeMode))));
 
-  
   await appLogic.bootstrap();
 
   // Remove splash screen when bootstrap is complete
@@ -82,7 +74,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       builder: (context, child) => child!,
       child: GlobalLoaderOverlay(
         useDefaultLoading: false,
-        overlayWidget: _overlayWidget(),
+        overlayWidgetBuilder: (_) {
+          return _overlayWidget();
+        },
         child: AdaptiveTheme(
             dark: AppTheme.darkTheme,
             light: AppTheme.lightTheme,
@@ -109,10 +103,7 @@ Widget _overlayWidget() {
   );
 }
 
-
-
 final container = ProviderContainer();
-
 
 /// Add syntax sugar for quickly accessing the main "logic" controllers in the app
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the view/widget layer.

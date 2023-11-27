@@ -14,8 +14,8 @@ class CocktailCardRenderer extends StatelessWidget {
   final double cardHeight;
   final dynamic cocktail;
 
-  const CocktailCardRenderer(this.offset, {Key? key, this.cardWidth = 250, required this.cocktail,
-    required this.cardHeight}) : super(key: key);
+  const CocktailCardRenderer(this.offset, {super.key, this.cardWidth = 250, required this.cocktail,
+    required this.cardHeight});
 
   @override
   Widget build(BuildContext context) {
