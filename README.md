@@ -7,7 +7,7 @@ Cocktalez is a well-structured Flutter application that allows you to explore a 
 - View details of each cocktail, including ingredients, instructions, and an image.
 - Search for cocktails by name or ingredient.
 - View cocktails by Glass
-- View Cocktails By Ingridients
+- View Cocktails By Ingredients
 - Enjoy smooth and visually appealing animations throughout the app.
 
 
