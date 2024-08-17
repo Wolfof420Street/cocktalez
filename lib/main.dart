@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       builder: (context, child) => child!,
       child: GlobalLoaderOverlay(
         useDefaultLoading: false,
-        overlayWidget: _overlayWidget(),
+        overlayWidgetBuilder: (ctx) => _overlayWidget(),
         child: AdaptiveTheme(
             dark: AppTheme.darkTheme,
             light: AppTheme.lightTheme,
