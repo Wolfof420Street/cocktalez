@@ -46,6 +46,10 @@ class _CocktailsPageState extends State<CocktailsPage>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth >= 600;
+    final maxWidth = isTablet ? 1200.0 : screenWidth;
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -58,108 +62,136 @@ class _CocktailsPageState extends State<CocktailsPage>
         body: SafeArea(
           child: Consumer(builder: (context, ref, child) {
             return ref.watch(randomCocktailProvider).when(
-                  data: (randomCocktailValue) {
-                    if (kDebugMode) print('Value : $randomCocktailValue');
+              data: (randomCocktailValue) {
+                if (kDebugMode) print('Value : $randomCocktailValue');
 
-                    return SingleChildScrollView(
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: maxWidth),
+                    child: SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                          left: isTablet ? 32 : 0,
+                          right: isTablet ? 32 : 0,
+                        ),
                         child: Column(
                           children: [
                             Gap($dimensions.insets.xl),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: $dimensions.insets.md),
-                              child: const Text(
+                              child: Text(
                                 "Mix & Sip: Unleash the Magic of Spirited Concoctions! 🍹✨",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: isTablet ? 28 : 20,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                             Gap($dimensions.insets.xl),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: TextField(
-                                controller: _searchController,
-                                decoration: InputDecoration(
-                                  hintText: 'Search for Cocktails',
-                                  filled: true,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    borderSide: BorderSide.none,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isTablet ? 32 : 16,
+                              ),
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(maxWidth: 600),
+                                child: TextField(
+                                  controller: _searchController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Search for Cocktails',
+                                    filled: true,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: isTablet ? 16 : 8,
+                                      horizontal: isTablet ? 24 : 16,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: Colors.grey,
+                                      size: isTablet ? 28 : 24,
+                                    ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
+                                  style: TextStyle(
+                                    fontSize: isTablet ? 18 : 16,
                                   ),
-                                  prefixIcon:
-                                      const Icon(Icons.search, color: Colors.grey),
                                 ),
                               ),
                             ),
                             Gap($dimensions.insets.xl),
                             _searchController.text.isNotEmpty &&
-                                      _searchController.text.length > 3
-                                  ? CocktailSearchScreen(
-                                      searchQuery: _searchController.text)
-                                  : _buildTabbedContent(),
-                            
+                                _searchController.text.length > 3
+                                ? CocktailSearchScreen(
+                                searchQuery: _searchController.text)
+                                : _buildTabbedContent(isTablet),
                           ],
                         ),
                       ),
-                    );
-                  },
-                  loading: () => Center(
-                      child: Lottie.asset('assets/anim/intro_loading.json')),
-                  error: (_, __) => customErrorWidget(() {}, context: context),
+                    ),
+                  ),
                 );
+              },
+              loading: () => Center(
+                  child: Lottie.asset('assets/anim/intro_loading.json')),
+              error: (_, __) => customErrorWidget(() {}, context: context),
+            );
           }),
         ),
       ),
     );
   }
 
-  Widget _buildTabbedContent() {
+  Widget _buildTabbedContent(bool isTablet) {
+    // Calculate appropriate height based on screen size
+    final tabBarHeight = isTablet ? 600.0 : 400.0;
+
     return Column(
       children: [
-        TabBar(
-          controller: _tabController!,
-          tabs: const [
-            Tab(
-              child: Text(
-                'Popular',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: isTablet ? 32 : 0),
+          child: TabBar(
+            controller: _tabController!,
+            tabs: [
+              Tab(
+                child: Text(
+                  'Popular',
+                  style: TextStyle(
+                    fontSize: isTablet ? 20 : 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Tab(
-              child: Text(
-                'Alcoholic',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Tab(
+                child: Text(
+                  'Alcoholic',
+                  style: TextStyle(
+                    fontSize: isTablet ? 20 : 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Tab(
-              child: Text(
-                'Mocktails',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Tab(
+                child: Text(
+                  'Mocktails',
+                  style: TextStyle(
+                    fontSize: isTablet ? 20 : 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Gap($dimensions.insets.xl),
         SizedBox(
-          height: 400,
+          height: tabBarHeight,
           child: TabBarView(
             controller: _tabController,
             children: const [
