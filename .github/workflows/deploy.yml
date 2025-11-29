@@ -10,7 +10,7 @@ jobs:
   # iOS Job (TestFlight) - Runs on Push to Main
   # -----------------------------------------------------------------
   ios:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     runs-on: macos-latest
     defaults:
       run:
