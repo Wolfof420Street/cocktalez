@@ -13,7 +13,8 @@ class FluidNavBar extends StatefulWidget {
   final FluidNavBarChangeCallback onChange;
   final List<FluidFillIconData> icons;
 
-  const FluidNavBar({super.key, required this.onChange, required this.icons});
+  const FluidNavBar({super.key, required this.onChange, required this.icons})
+      : assert(icons.length > 0);
 
   @override
   State createState() => _FluidNavBarState();
@@ -103,7 +104,7 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
           begin: Curves.easeInExpo.transform(_yController.value),
           end: inCurve.transform(_yController.value),
         ).transform(_yController.velocity.sign * 0.5 + 0.5),
-        Theme.of(context).textTheme.labelLarge!.color!.withOpacity(0.12),
+        Theme.of(context).textTheme.labelLarge!.color!.withAlpha((0.12 * 255).toInt()),
       ),
     );
   }
