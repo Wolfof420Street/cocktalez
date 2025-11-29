@@ -133,32 +133,30 @@ class _IngridientsPageState extends State<IngridientsPage> {
     ingridientsResponse = response;
     _drinks.clear();
     _drinks.addAll(response.drinks);
-
+    if (_drinks.isEmpty) {
+      return const Center(
+        child: Text('No ingredients available'),
+      );
+    }
     bool shortMode = context.heightPx <= 800;
     final double bottomHeight = context.heightPx / 2.75;
     double itemHeight = (context.heightPx - 200 - bottomHeight).clamp(250, 400);
     double itemWidth = itemHeight * .666;
-
     _updatePageController(itemWidth / context.widthPx);
-
     final pages = response.drinks.map((e) {
       return Padding(
         padding: const EdgeInsets.all(10),
         child: _DoubleBorderImage(e),
       );
     }).toList();
-
     return Stack(
       children: [
         /// Blurred Bg
         Positioned.fill(child: _buildBlurredBg()),
-
         /// BgCircle
         _buildBgCircle(bottomHeight),
-
         /// Carousel Items
         _buildCarousel(itemWidth, pages),
-
         /// Bottom Text
         BottomCenter(
           child: ValueListenableBuilder<num>(
@@ -171,7 +169,6 @@ class _IngridientsPageState extends State<IngridientsPage> {
             ),
           ),
         ),
-
         /// Header
         const AppHeader(
           title: 'Ingridients',
@@ -181,7 +178,6 @@ class _IngridientsPageState extends State<IngridientsPage> {
       ],
     );
   }
-
   Widget _buildBlurredBg() {
     return ValueListenableBuilder<num>(
       valueListenable: _currentArtifactIndex,
