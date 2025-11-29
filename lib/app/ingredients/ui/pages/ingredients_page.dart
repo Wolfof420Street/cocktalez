@@ -38,6 +38,43 @@ class IngridientsPage extends StatefulWidget {
 class _IngridientsPageState extends State<IngridientsPage> {
   PageController? _pageController;
 
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      viewportFraction: 0.8,
+      initialPage: _currentPage.value.round(),
+    );
+    _pageController!.addListener(_handlePageChanged);
+  }
+
+  @override
+  void dispose() {
+    _pageController?.removeListener(_handlePageChanged);
+    _pageController?.dispose();
+    super.dispose();
+  }
+
+  void _updatePageController(double newViewportFraction) {
+    if (_pageController != null && 
+        (_pageController!.viewportFraction - newViewportFraction).abs() < 0.001) {
+      return;
+    }
+
+    final int page = _pageController?.hasClients == true 
+        ? _pageController!.page!.round() 
+        : _currentPage.value.round();
+
+    _pageController?.removeListener(_handlePageChanged);
+    _pageController?.dispose();
+
+    _pageController = PageController(
+      viewportFraction: newViewportFraction,
+      initialPage: page,
+    );
+    _pageController!.addListener(_handlePageChanged);
+  }
+
   final List<Drinks> _drinks = [];
 
   final _currentPage = ValueNotifier<double>(9999);
@@ -102,13 +139,7 @@ class _IngridientsPageState extends State<IngridientsPage> {
     double itemHeight = (context.heightPx - 200 - bottomHeight).clamp(250, 400);
     double itemWidth = itemHeight * .666;
 
-    _pageController?.dispose();
-    _pageController = PageController(
-      viewportFraction: itemWidth / context.widthPx,
-      initialPage: _currentPage.value.round(),
-    );
-
-    _pageController?.addListener(_handlePageChanged);
+    _updatePageController(itemWidth / context.widthPx);
 
     final pages = response.drinks.map((e) {
       return Padding(

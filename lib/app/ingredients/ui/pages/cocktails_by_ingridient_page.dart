@@ -11,7 +11,8 @@ import '../../../../constants/router.dart';
 import '../../../components/app_header.dart';
 import '../../../components/app_image.dart';
 import 'package:cocktalez/app/components/async_data_widget.dart';
-import 'package:cocktalez/app/components/loading_indicator.dart';import '../../../components/buttons.dart';
+import 'package:cocktalez/app/components/loading_indicator.dart';
+import '../../../components/buttons.dart';
 
 import '../../../components/cocktail_grid.dart';
 part '../widgets/_result_tile.dart';

@@ -17,10 +17,12 @@ platform :ios do
     )
 
     # 3. Build the App
+    # Build Flutter Project explicitly before archiving
+    sh "cd .. && flutter build ios --release --no-codesign --build-number=#{ENV['GITHUB_RUN_NUMBER'] || '1'}"
+
     build_app(
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
-      flutter_build_args: "--release --build-number=#{ENV['GITHUB_RUN_NUMBER']}" # Sync build number with CI
     )
 
     # 4. Upload to TestFlight

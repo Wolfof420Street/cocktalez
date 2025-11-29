@@ -22,7 +22,7 @@ class CocktailGridWidget<T> extends StatefulWidget {
   final double crossAxisSpacing;
   final EdgeInsetsGeometry padding;
   final Future<void> Function()? onRefresh;
-  final VoidCallback? onEndReached;
+  final Future<void> Function()? onEndReached;
   final bool isLoadingMore;
   final ScrollController? controller;
   final bool shrinkWrap;
@@ -50,6 +50,7 @@ class CocktailGridWidget<T> extends StatefulWidget {
 class _CocktailGridWidgetState<T> extends State<CocktailGridWidget<T>> {
   late final ScrollController _controller;
   bool _hasListener = false;
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
@@ -84,11 +85,20 @@ class _CocktailGridWidgetState<T> extends State<CocktailGridWidget<T>> {
     }
   }
 
-  void _onScroll() {
+  Future<void> _onScroll() async {
     if (widget.onEndReached == null) return;
+    if (_isLoadingMore) return;
+
     // trigger when we are near the end (200 px remaining)
     if (_controller.position.maxScrollExtent - _controller.position.pixels < 200) {
-      widget.onEndReached?.call();
+      _isLoadingMore = true;
+      try {
+        await widget.onEndReached?.call();
+      } finally {
+        if (mounted) {
+          _isLoadingMore = false;
+        }
+      }
     }
   }
 
