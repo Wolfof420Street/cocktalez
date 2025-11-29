@@ -2,7 +2,7 @@ part of '../pages/ingredients_page.dart';
 
 /// Blurry image background for the Cocktail Highlights view. Contains horizontal and vertical gradients that stack overtop the blended image.
 class _BlurredImageBg extends ConsumerWidget {
-  const _BlurredImageBg({Key? key, this.url}) : super(key: key);
+  const _BlurredImageBg({this.url});
   final String? url;
 
   @override

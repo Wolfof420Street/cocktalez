@@ -3,23 +3,17 @@ import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 import 'package:sized_context/sized_context.dart';
-
-import '../../../../constants/app_icons.dart';
 
 import '../../../../constants/router.dart';
 import '../../../components/app_header.dart';
 import '../../../components/app_image.dart';
-import '../../../components/buttons.dart';
-import '../../../components/circle_buttons.dart';
-import '../../../components/error_widget.dart';
-import '../../../components/scroll_decorator.dart';
+import 'package:cocktalez/app/components/async_data_widget.dart';
+import 'package:cocktalez/app/components/loading_indicator.dart';import '../../../components/buttons.dart';
 
-part '../widgets/_ingridient_by_glass_grid.dart';
+import '../../../components/cocktail_grid.dart';
 part '../widgets/_result_tile.dart';
 
 class CocktailsByIngridientPage extends StatelessWidget {
@@ -29,107 +23,65 @@ class CocktailsByIngridientPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (ctx, ref, child) {
-      return ref.watch(cocktailByIngridientProvider(ingridient)).map(
-          data: (cocktailByIngridientAsyncValue) {
-        CocktailResponse cocktailResponse =
-            cocktailByIngridientAsyncValue.value;
-
-        Widget content = GestureDetector(
-          onTap: FocusManager.instance.primaryFocus?.unfocus,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            AppHeader(
-                title: '', subtitle: '$ingridient cocktails'),
-            Expanded(
-                child: RepaintBoundary(
-                    child: CocktailByIngrientGrid(
-              cocktailResponse: cocktailResponse,
-              onPressed: (Drinks drink) {
-                context.push(ScreenPaths.cocktailDetails(drink.idDrink));
-              },
-            )))
-          ]),
-        );
-        return Stack(
-          children: [
-            Positioned.fill(
-                child: ColoredBox(
-                    color: Theme.of(context).cardColor, child: content)),
-          ],
-        );
-      }, loading: (_) {
-        return Scaffold(
-          body: Center(
-            child: Lottie.asset('assets/anim/intro_loading.json'),
-          ),
-        );
-      }, error: (error) {
-        return Scaffold(body: customErrorWidget(() {
-          return ref.refresh(cocktailByIngridientProvider(ingridient));
-        }, context: context));
-      });
-    });
-  }
-
-  Widget _buildInput(BuildContext context, TextEditingController textController,
-      FocusNode focusNode) {
-    Color captionColor = Theme.of(context).hintColor;
-    return Container(
-      height: $dimensions.insets.xl,
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular($dimensions.insets.xs),
-      ),
-      child: Row(
-        children: [
-          Gap($dimensions.insets.xs * 1.5),
-          Icon(Icons.search, color: Theme.of(context).iconTheme.color),
-          Expanded(
-            child: TextField(
-              onSubmitted: (String value) {},
-              controller: textController,
-              focusNode: focusNode,
-              style: TextStyle(color: captionColor),
-              textAlignVertical: TextAlignVertical.top,
-              decoration: InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.all($dimensions.insets.xs),
-                labelStyle: TextStyle(color: captionColor),
-                hintStyle: TextStyle(color: captionColor.withOpacity(0.5)),
-                prefixStyle: TextStyle(color: captionColor),
-                focusedBorder:
-                    const OutlineInputBorder(borderSide: BorderSide.none),
-                enabledBorder:
-                    const UnderlineInputBorder(borderSide: BorderSide.none),
-                hintText: 'Search',
-              ),
+    return Consumer(builder: (context, ref, child) {
+      return AsyncDataWidget<CocktailResponse>(
+        provider: cocktailByIngridientProvider(ingridient),
+        data: (cocktailResponse) {
+          Widget content = GestureDetector(
+            onTap: FocusManager.instance.primaryFocus?.unfocus,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppHeader(title: '', subtitle: '$ingridient cocktails'),
+                Expanded(
+                  child: RepaintBoundary(
+                    child: _IngredientCocktailGrid(
+                      items: cocktailResponse.drinks,
+                      onPressed: (Drinks drink) {
+                        context.push(ScreenPaths.cocktailDetails(drink.idDrink));
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Gap($dimensions.insets.xs),
-          ValueListenableBuilder(
-            valueListenable: textController,
-            builder: (_, value, __) => Visibility(
-              visible: textController.value.text.isNotEmpty,
-              child: Padding(
-                padding: EdgeInsets.only(right: $dimensions.insets.xs),
-                child: CircleIconBtn(
-                  bgColor: Theme.of(context).cardColor,
+          );
+          
+          return Stack(
+            children: [
+              Positioned.fill(
+                child: ColoredBox(
                   color: Theme.of(context).cardColor,
-                  icon: AppIcons.close,
-                  semanticLabel: 'Search',
-                  size: $dimensions.insets.md,
-                  iconSize: $dimensions.insets.sm,
-                  onPressed: () {
-                    textController.clear();
-                    // onSubmit('');
-                  },
+                  child: content,
                 ),
               ),
-            ),
-          )
-        ],
-      ),
+            ],
+          );
+        },
+        wrapLoadingInScaffold: true,
+        wrapErrorInScaffold: true,
+        loading: () => const AppLoadingIndicator(),
+      );
+    });
+  }
+}
+
+class _IngredientCocktailGrid extends StatelessWidget {
+  final List<Drinks> items;
+  final void Function(Drinks) onPressed;
+
+  const _IngredientCocktailGrid({required this.items, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return CocktailGridWidget<Drinks>(
+      items: items,
+      itemBuilder: (context, drink) => _ResultTile(onPressed: onPressed, data: drink),
+      crossAxisCount: (context.widthPx / 300).ceil(),
+      childAspectRatio: 0.7,
+      mainAxisSpacing: $dimensions.insets.sm,
+      crossAxisSpacing: $dimensions.insets.sm,
+      padding: EdgeInsets.all($dimensions.insets.sm).copyWith(bottom: $dimensions.insets.offset * 1.5),
     );
   }
 }

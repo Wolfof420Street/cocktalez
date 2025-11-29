@@ -7,7 +7,7 @@ import 'app_header.dart';
 import 'app_image.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
-  const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0}) : super(key: key);
+  const FullscreenUrlImgViewer({super.key, required this.urls, this.index = 0});
   final List<String> urls;
   final int index;
 
@@ -67,7 +67,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
 }
 
 class _Viewer extends StatefulWidget {
-  const _Viewer(this.url, this.isZoomed, {Key? key}) : super(key: key);
+  const _Viewer(this.url, this.isZoomed);
 
   final String url;
   final ValueNotifier<bool> isZoomed;

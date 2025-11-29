@@ -5,17 +5,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 import 'package:sized_context/sized_context.dart';
 
 import '../../../../constants/router.dart';
 import '../../../../main.dart';
 import '../../../cocktails/data/model/cocktail_response.dart';
-import '../../../cocktails/provider/cocktail_provider.dart';
 import '../../../components/app_header.dart';
 import '../../../components/app_image.dart';
+import 'package:cocktalez/app/components/async_data_widget.dart';
 import '../../../components/buttons.dart';
-import '../../../components/error_widget.dart';
+import '../../../components/loading_indicator.dart';
 import '../../../components/scroll_decorator.dart';
 
 part '../widgets/_search_tile.dart';
@@ -24,30 +23,32 @@ part '../widgets/_search_cocktail_grid.dart';
 class CocktailSearchScreen extends StatelessWidget {
   final String searchQuery;
 
-  const CocktailSearchScreen({Key? key, required this.searchQuery})
-      : super(key: key);
+  const CocktailSearchScreen({super.key, required this.searchQuery});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (ctx, ref, child) {
-      return ref.watch(searchCocktailsProvider(searchQuery)).when(
-            data: (searchCocktailsResponse) {
-              return searchCocktailsResponse is FullCocktailResponse ? SearchCocktailsResult(
-                searchCocktailsResponse: searchCocktailsResponse,
-                onPressed: (drink) =>
-                    context.push(ScreenPaths.cocktailDetails(drink.idDrink)),
-              ) : const Center(
-                child: Text(
-                'No Cocktail Found with this name'
-              ));
-            },
-            loading: () => Center(
-              child: Lottie.asset('assets/anim/intro_loading.json'),
-            ),
-            error: (_, __) => customErrorWidget(() {
-              return ref.refresh(searchCocktailsProvider(searchQuery));
-            }),
+    return Consumer(builder: (context, ref, child) {
+      return AsyncMapWidget<dynamic, FullCocktailResponse>(
+        provider: searchCocktailsProvider(searchQuery),
+        extract: (data) {
+          if (data is! FullCocktailResponse) return null;
+          return data;
+        },
+        data: (searchCocktailsResponse) {
+          if (searchCocktailsResponse.drinks.isEmpty) {
+            return const Center(
+              child: Text('No Cocktail Found with this name'),
+            );
+          }
+          
+          return SearchCocktailsResult(
+            searchCocktailsResponse: searchCocktailsResponse,
+            onPressed: (drink) =>
+                context.push(ScreenPaths.cocktailDetails(drink.idDrink)),
           );
+        },
+        loading: () => const AppLoadingIndicator(),
+      );
     });
   }
 }
@@ -57,16 +58,16 @@ class SearchCocktailsResult extends StatelessWidget {
   final void Function(Drinks drink) onPressed;
 
   const SearchCocktailsResult({
-    Key? key,
+    super.key,
     required this.searchCocktailsResponse,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusManager.instance.primaryFocus?.unfocus,
-      child: Container(
+      child: SizedBox(
         height: context.heightPx,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

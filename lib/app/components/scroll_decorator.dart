@@ -9,19 +9,19 @@ class ScrollDecorator extends StatefulWidget {
   /// its ScrollController.
   // ignore: prefer_const_constructors_in_immutables
   ScrollDecorator({
-    Key? key,
+    super.key,
     required this.builder,
     this.fgBuilder,
     this.bgBuilder,
     this.controller,
     this.onInit,
-  }) : super(key: key);
+  });
 
   /// Creates a ScrollDecorator that fades a widget in at the begin or end of the scrolling widget based on the scroll
   /// position. For example on a vertical list, it would fade in the `begin` widget when the list is not scrolled to the
   /// top.
   ScrollDecorator.fade({
-    Key? key,
+    super.key,
     required this.builder,
     this.controller,
     this.onInit,
@@ -30,7 +30,7 @@ class ScrollDecorator extends StatefulWidget {
     bool bg = false,
     Axis direction = Axis.vertical,
     Duration duration = const Duration(milliseconds: 150),
-  }) : super(key: key) {
+  }) {
     Flex flexBuilder(controller) {
       return Flex(
         direction: direction,
@@ -58,12 +58,12 @@ class ScrollDecorator extends StatefulWidget {
 
   /// Creates an ScrollDecorator that adds a shadow to the top of a vertical list when it is scrolled down.
   ScrollDecorator.shadow({
-    Key? key,
+    super.key,
     required this.builder,
     this.controller,
     this.onInit,
     Color color = Colors.black54,
-  }) : super(key: key) {
+  }) {
     bgBuilder = null;
     fgBuilder = (controller) {
       final double ratio = controller.hasClients ? min(1, controller.position.extentBefore / 60) : 0;
@@ -72,7 +72,7 @@ class ScrollDecorator extends StatefulWidget {
           height: 24,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [color.withOpacity(ratio * color.opacity), Colors.transparent],
+              colors: [color.withAlpha((ratio * 255).toInt()), Colors.transparent],
               stops: [0, ratio],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,

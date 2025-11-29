@@ -1,7 +1,7 @@
 part of '../pages/cocktail_by_glass_page.dart';
 
 class _GlassTile extends StatelessWidget {
-  const _GlassTile({Key? key, required this.onPressed, required this.data}) : super(key: key);
+  const _GlassTile({required this.onPressed, required this.data});
 
   final void Function(Drinks data) onPressed;
   final Drinks data;
@@ -13,7 +13,6 @@ class _GlassTile extends StatelessWidget {
       key: ValueKey(data.idDrink),
       image: NetworkImage(data.strDrinkThumb),
       fit: BoxFit.cover,
-      scale: 0.5,
       distractor: true,
       color: Theme.of(context).cardColor,
     );
@@ -31,13 +30,19 @@ class _GlassTile extends StatelessWidget {
             height: double.infinity,
             child: Column(
               children: [
-                image,
+                Expanded(child: image),
                 Gap($dimensions.insets.md),
-                Flexible(
-                  child: Text(data.strDrink,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: $dimensions.insets.xs),
+                  child: Text(
+                    data.strDrink,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
                   ),
-                )
+                ),
+                Gap($dimensions.insets.xs),
               ],
             ),
           ),

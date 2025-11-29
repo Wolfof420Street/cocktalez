@@ -12,14 +12,13 @@ class RoundedShadow extends StatelessWidget {
   final double bottomRightRadius;
 
   const RoundedShadow(
-      {Key? key,
+      {super.key,
       this.shadowColor,
       this.topLeftRadius = 48,
       this.topRightRadius = 48,
       this.bottomLeftRadius = 48,
       this.bottomRightRadius = 48,
-      this.child})
-      : super(key: key);
+      this.child});
 
   const RoundedShadow.fromRadius(double radius, {super.key, this.child, this.shadowColor}) :
         topLeftRadius=radius, topRightRadius=radius, bottomLeftRadius=radius, bottomRightRadius=radius;

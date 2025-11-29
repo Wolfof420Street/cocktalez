@@ -1,17 +1,15 @@
-import 'package:cocktalez/app/cocktails/data/model/ingridients_response.dart';
-import 'package:cocktalez/app/search/data/remote/search_service.dart';
+import 'package:cocktalez/app/cocktails/data/model/cocktail_full_response.dart';
+import 'package:cocktalez/app/search/data/provider/repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final searchCocktailsProvider = FutureProvider.family<dynamic, String>(
-  (ref, arg) async {
-    final search = await ref.watch(searchService).searchCocktails(arg);
-    return search;
-  }
+final searchCocktailsProvider = FutureProvider.autoDispose.family<FullCocktailResponse, String>(
+  (ref, query) async {
+    return await ref.watch(searchRepositoryProvider).searchCocktails(query);
+  },
 );
 
-final searchIngredientProvider = FutureProvider.family<IngridientsResponse, String>(
-  (ref, arg) async {
-    final search = await ref.watch(searchService).searchIngridient(arg);
-    return search;
-  }
+final searchIngredientProvider = FutureProvider.autoDispose.family<FullCocktailResponse, String>(
+  (ref, ingredient) async {
+    return await ref.watch(searchRepositoryProvider).searchIngredient(ingredient);
+  },
 );

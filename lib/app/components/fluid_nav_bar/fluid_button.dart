@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/animation.dart';
+
 
 import './fluid_icon.dart';
 import './curves.dart';
 
-typedef void FluidNavBarButtonPressedCallback();
+typedef FluidNavBarButtonPressedCallback = void Function();
 
 class FluidNavBarButton extends StatefulWidget {
-  static const nominalExtent = const Size(64, 64);
+  static const nominalExtent =  Size(64, 64);
 
   final FluidFillIconData _iconData;
   final bool _selected;
   final FluidNavBarButtonPressedCallback _onPressed;
 
-  FluidNavBarButton(FluidFillIconData iconData, bool selected, FluidNavBarButtonPressedCallback onPressed)
+  const FluidNavBarButton(FluidFillIconData iconData, bool selected, FluidNavBarButtonPressedCallback onPressed, {super.key})
       : _iconData = iconData, _selected = selected, _onPressed = onPressed;
 
   @override
   State createState() {
-    return _FluidNavBarButtonState(_iconData, _selected, _onPressed);
+    return _FluidNavBarButtonState();
   }
 }
 
@@ -27,17 +27,10 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
   static const double _defaultOffset = 0;
   static const double _radius = 25;
 
-  FluidFillIconData _iconData;
-  bool _selected;
-  FluidNavBarButtonPressedCallback _onPressed;
-
   AnimationController? _animationController;
   Animation<double>? _animation;
 
-  _FluidNavBarButtonState(FluidFillIconData iconData, bool selected, FluidNavBarButtonPressedCallback onPressed)
-      : _iconData = iconData,
-      _selected = selected,
-      _onPressed = onPressed;
+  _FluidNavBarButtonState();
 
   @override
   void initState() {
@@ -64,8 +57,8 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
   @override
   Widget build(context) {
     const ne = FluidNavBarButton.nominalExtent;
-    final offsetCurve = _selected ? const ElasticOutCurve(0.38) : Curves.easeInQuint;
-    final scaleCurve = _selected ? const CenteredElasticOutCurve(0.6) : const CenteredElasticInCurve(0.6);
+    final offsetCurve = widget._selected ? const ElasticOutCurve(0.38) : Curves.easeInQuint;
+    final scaleCurve = widget._selected ? const CenteredElasticOutCurve(0.6) : const CenteredElasticInCurve(0.6);
 
     final progress = const LinearPointCurve(0.28, 0.0).transform(_animation?.value ?? 0);
 
@@ -79,7 +72,7 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
     // Create a parameterizable flat button with a fluid fill icon
     return GestureDetector(
       // We wan't to know when this button was tapped, don't bother letting out children know as well
-      onTap: _onPressed,
+      onTap: widget._onPressed,
       behavior: HitTestBehavior.opaque,
       child: Container(
         // Alignment container to the circle
@@ -96,7 +89,7 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
           transform: Matrix4.translationValues(0, -offset, 0),
           // Create a fluid fill icon that get's filled in with a slight delay to the buttons animation
           child: FluidFillIcon(
-              _iconData,
+              widget._iconData,
               const LinearPointCurve(0.25, 1.0).transform(_animation?.value ?? 0),
               scaleY,
           ),
@@ -107,15 +100,14 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
 
   @override
   void didUpdateWidget(oldWidget) {
-    setState(() {
-      _selected = widget._selected;
-    });
-    _startAnimation();
     super.didUpdateWidget(oldWidget);
+    if (oldWidget._selected != widget._selected) {
+      _startAnimation();
+    }
   }
 
   void _startAnimation() {
-    if (_selected) {
+    if (widget._selected) {
       _animationController?.forward();
     } else {
       _animationController?.reverse();

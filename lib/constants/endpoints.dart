@@ -1,9 +1,9 @@
-import '../utils/config.dart';
+import 'package:cocktalez/env/env.dart';
 
 class Endpoints {
 // Access the API key
 
-  static String baseUrl = 'https://www.thecocktaildb.com/api/json/v2/$apiKey';
+  static String baseUrl = 'https://www.thecocktaildb.com/api/json/v2/${Env.cocktailDbKey}';
 
   static String getAlcoholicCocktails = '/filter.php?a=Alcoholic';
 

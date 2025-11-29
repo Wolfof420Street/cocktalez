@@ -4,15 +4,14 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AppPageIndicator extends StatefulWidget {
   const AppPageIndicator({
-    Key? key,
+    super.key,
     required this.count,
     required this.controller,
     this.onDotPressed,
     this.color,
     this.dotSize,
     String? semanticPageTitle,
-  })  : semanticPageTitle = semanticPageTitle ?? '',
-        super(key: key);
+  })  : semanticPageTitle = semanticPageTitle ?? '';
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;
@@ -33,7 +32,6 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
     widget.controller.addListener(_handlePageChanged);
   }
 
-  int get _controllerPage => _currentPage.value;
 
   void _handlePageChanged() {
     _currentPage.value = widget.controller.page!.round();

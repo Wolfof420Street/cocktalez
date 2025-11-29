@@ -2,8 +2,7 @@ part of '../pages/ingredients_page.dart';
 
 class _BottomTextContent extends StatelessWidget {
   const _BottomTextContent(
-      {Key? key, required this.ingridient, required this.height, required this.state, required this.shortMode})
-      : super(key: key);
+      {required this.ingridient, required this.height, required this.state, required this.shortMode});
 
   final Drinks ingridient;
   final double height;
@@ -28,7 +27,6 @@ class _BottomTextContent extends StatelessWidget {
               Column(
                 children: [
                   IgnorePointer(
-                    ignoringSemantics: false,
                     child: Semantics(
                       button: true,
                       onIncrease: () => state._handleIngridientTap(_currentPage + 1),

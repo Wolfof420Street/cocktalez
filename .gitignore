@@ -48,3 +48,7 @@ app.*.map.json
 # config file
 /lib/utils/config.dart
 
+.env
+
+fastlane_match_key
+fastlane_match_key.pub

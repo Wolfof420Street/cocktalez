@@ -1,8 +1,9 @@
-import 'package:cocktalez/constants/app_colors.dart';
+
 import 'package:cocktalez/main.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import 'package:cocktalez/app/components/adaptive/adaptive_button.dart';
 import '../../constants/app_icons.dart';
 
 /// Shared methods across button types
@@ -13,7 +14,7 @@ Widget _buildIcon(BuildContext context, AppIcons icon, {required bool isSecondar
 class AppBtn extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
   AppBtn({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.semanticLabel,
     this.enableFeedback = true,
@@ -26,11 +27,10 @@ class AppBtn extends StatelessWidget {
     this.minimumSize,
     this.bgColor,
     this.border,
-  })  : _builder = null,
-        super(key: key);
+  })  : _builder = null;
 
   AppBtn.from({
-    Key? key,
+    super.key,
     required this.onPressed,
     this.enableFeedback = true,
     this.pressEffect = true,
@@ -45,8 +45,7 @@ class AppBtn extends StatelessWidget {
     AppIcons? icon,
     double? iconSize,
   })  : child = null,
-        circular = false,
-        super(key: key) {
+        circular = false {
     if (semanticLabel == null && text == null) throw ('AppBtn.from must include either text or semanticLabel');
     this.semanticLabel = semanticLabel ?? text ?? '';
     _builder = (context) {
@@ -70,7 +69,7 @@ class AppBtn extends StatelessWidget {
 
   // ignore: prefer_const_constructors_in_immutables
   AppBtn.basic({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.semanticLabel,
     this.enableFeedback = true,
@@ -83,8 +82,7 @@ class AppBtn extends StatelessWidget {
   })  : expand = false,
         bgColor = Colors.transparent,
         border = null,
-        _builder = null,
-        super(key: key);
+        _builder = null;
 
   // interaction:
   final VoidCallback? onPressed;
@@ -111,56 +109,32 @@ class AppBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     Color defaultColor = isSecondary ? Colors.white : Colors.grey;
     Color textColor = isSecondary ? Colors.black : Colors.white;
-    BorderSide side = border ?? BorderSide.none;
+
 
     Widget content = _builder?.call(context) ?? child ?? const SizedBox.shrink();
     if (expand) content = Center(child: content);
 
-    OutlinedBorder shape = circular
-        ? CircleBorder(side: side)
-        : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular($dimensions.corners.md));
+    // Calculate borderRadius
+    final borderRadius = circular
+        ? BorderRadius.circular(100) // Large radius for circle
+        : BorderRadius.circular($dimensions.corners.md);
 
-    ButtonStyle style = ButtonStyle(
-      minimumSize: ButtonStyleButton.allOrNull<Size>(minimumSize ?? Size.zero),
-      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      splashFactory: NoSplash.splashFactory,
-      backgroundColor: ButtonStyleButton.allOrNull<Color>(bgColor ?? defaultColor),
-      overlayColor: ButtonStyleButton.allOrNull<Color>(Colors.transparent), // disable default press effect
-      shape: ButtonStyleButton.allOrNull<OutlinedBorder>(shape),
-      padding: ButtonStyleButton.allOrNull<EdgeInsetsGeometry>(padding ?? EdgeInsets.all($dimensions.insets.md)),
-
-      enableFeedback: enableFeedback,
+    // Wrap content in DefaultTextStyle to ensure correct text color
+    Widget styledContent = DefaultTextStyle(
+      style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
+      child: content,
     );
 
-    Widget button = _CustomFocusBuilder(
-      builder: (context, focus) => Stack(
-        children: [
-          TextButton(
-            onPressed: onPressed,
-            style: style,
-            focusNode: focus,
-            child: DefaultTextStyle(
-              style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
-              child: content,
-            ),
-          ),
-          if (focus.hasFocus)
-            Positioned.fill(
-              child: IgnorePointer(
-                child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular($dimensions.corners.md),
-                        border: Border.all(color: AppColors.accent, width: 3))),
-              ),
-            )
-        ],
-      ),
+    Widget button = AdaptiveButton(
+      onPressed: onPressed,
+      color: bgColor ?? defaultColor,
+      padding: padding ?? EdgeInsets.all($dimensions.insets.md),
+      borderRadius: borderRadius,
+      border: border,
+      child: styledContent,
     );
 
-    // add press effect:
-    if (pressEffect) button = _ButtonPressEffect(button);
-
-    // add semantics?
+    // Semantics
     if (semanticLabel.isEmpty) return button;
     return Semantics(
       label: semanticLabel,
@@ -168,53 +142,5 @@ class AppBtn extends StatelessWidget {
       container: true,
       child: ExcludeSemantics(child: button),
     );
-  }
-}
-
-/// //////////////////////////////////////////////////
-/// _ButtonDecorator
-/// Add a transparency-based press effect to buttons.
-/// //////////////////////////////////////////////////
-class _ButtonPressEffect extends StatefulWidget {
-  const _ButtonPressEffect(this.child, {Key? key}) : super(key: key);
-  final Widget child;
-
-  @override
-  State<_ButtonPressEffect> createState() => _ButtonPressEffectState();
-}
-
-class _ButtonPressEffectState extends State<_ButtonPressEffect> {
-  bool _isDown = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      excludeFromSemantics: true,
-      onTapDown: (_) => setState(() => _isDown = true),
-      onTapUp: (_) => setState(() => _isDown = false), // not called, TextButton swallows this.
-      onTapCancel: () => setState(() => _isDown = false),
-      behavior: HitTestBehavior.translucent,
-      child: Opacity(
-        opacity: _isDown ? 0.7 : 1,
-        child: ExcludeSemantics(child: widget.child),
-      ),
-    );
-  }
-}
-
-class _CustomFocusBuilder extends StatefulWidget {
-  const _CustomFocusBuilder({Key? key, required this.builder}) : super(key: key);
-  final Widget Function(BuildContext context, FocusNode focus) builder;
-
-  @override
-  State<_CustomFocusBuilder> createState() => _CustomFocusBuilderState();
-}
-
-class _CustomFocusBuilderState extends State<_CustomFocusBuilder> {
-  late final _focusNode = FocusNode()..addListener(() => setState(() {}));
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.builder.call(context, _focusNode);
   }
 }

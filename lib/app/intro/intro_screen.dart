@@ -19,7 +19,7 @@ import '../components/circle_buttons.dart';
 import '../components/themed_text.dart';
 
 class IntroScreen extends StatefulWidget {
-  const IntroScreen({Key? key}) : super(key: key);
+  const IntroScreen({super.key});
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -120,7 +120,6 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
 
                 IgnorePointer(
-                  ignoringSemantics: false,
                   child: Column(children: [
                     const Spacer(),
 
@@ -204,7 +203,7 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Transform.scale(
               scaleX: left ? -1 : 1,
               child: HzGradient([
-                Colors.black.withOpacity(0),
+                Colors.black.withAlpha(0),
                 Colors.black,
               ], const [
                 0,
@@ -223,7 +222,7 @@ class _IntroScreenState extends State<IntroScreen> {
           opacity: pageIndex == pageData.length - 1 ? 1 : 0,
           duration: $dimensions.times.fast,
           child: CircleIconBtn(
-            icon: AppIcons.next_large,
+            icon: AppIcons.nextLarge,
             bgColor: AppColors.accent,
             onPressed: _handleIntroCompletePressed,
             semanticLabel: "Next",
@@ -262,7 +261,7 @@ class _PageData {
 }
 
 class _Page extends StatelessWidget {
-  const _Page({Key? key, required this.data}) : super(key: key);
+  const _Page({required this.data});
 
   final _PageData data;
 
@@ -327,7 +326,7 @@ class _WonderousLogo extends StatelessWidget {
 }
 
 class _PageImage extends StatelessWidget {
-  const _PageImage({Key? key, required this.data}) : super(key: key);
+  const _PageImage({required this.data});
 
   final _PageData data;
 

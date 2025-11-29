@@ -9,8 +9,7 @@ class PlatformInfo {
   static bool get isDesktop => _desktopPlatforms.contains(defaultTargetPlatform) && !kIsWeb;
   static bool get isDesktopOrWeb => isDesktop || kIsWeb;
   static bool get isMobile => _mobilePlatforms.contains(defaultTargetPlatform) && !kIsWeb;
-
-  static double get pixelRatio => WidgetsBinding.instance.window.devicePixelRatio;
+  static double get pixelRatio => WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
 
   static bool get isWindows => defaultTargetPlatform == TargetPlatform.windows;
   static bool get isLinux => defaultTargetPlatform == TargetPlatform.linux;

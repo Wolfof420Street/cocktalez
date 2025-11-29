@@ -7,14 +7,14 @@ import '../../constants/app_icons.dart';
 
 class CircleBtn extends StatelessWidget {
   const CircleBtn({
-    Key? key,
+    super.key,
     required this.child,
     required this.onPressed,
     this.border,
     this.bgColor,
     this.size,
     required this.semanticLabel,
-  }) : super(key: key);
+  });
 
   static double defaultSize = 48;
 
@@ -43,7 +43,7 @@ class CircleBtn extends StatelessWidget {
 
 class CircleIconBtn extends StatelessWidget {
   const CircleIconBtn({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.border,
@@ -52,7 +52,7 @@ class CircleIconBtn extends StatelessWidget {
     this.size,
     this.iconSize,
     required this.semanticLabel,
-  }) : super(key: key);
+  });
 
   //TODO: Reduce size if design re-exports icon-images without padding
   static double defaultSize = 28;
@@ -85,13 +85,13 @@ class CircleIconBtn extends StatelessWidget {
 
 class BackBtn extends StatelessWidget {
   const BackBtn({
-    Key? key,
+    super.key,
     this.icon = AppIcons.prev,
     this.onPressed,
     this.semanticLabel,
     this.bgColor,
     this.iconColor,
-  }) : super(key: key);
+  });
 
   final Color? bgColor;
   final Color? iconColor;
@@ -122,7 +122,7 @@ class BackBtn extends StatelessWidget {
 }
 
 class _SafeAreaWithPadding extends StatelessWidget {
-  const _SafeAreaWithPadding({Key? key, required this.child}) : super(key: key);
+  const _SafeAreaWithPadding({required this.child});
 
   final Widget child;
 

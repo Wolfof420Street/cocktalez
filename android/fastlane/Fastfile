@@ -1,0 +1,17 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build Release APK"
+  lane :build_release do
+    # 1. Decode Keystore from Secret
+    # The workflow decodes it to 'android/app/upload-keystore.jks'
+    # Ensure your build.gradle is configured to use this path and env vars for password.
+    
+    # 2. Build APK
+    # We use the flutter CLI directly via sh to ensure correct flutter environment
+    sh "flutter build apk --release"
+
+    # 3. (Optional) You could move the apk to a specific output dir if needed
+    # The GitHub Action will pick it up from build/app/outputs/flutter-apk/app-release.apk
+  end
+end

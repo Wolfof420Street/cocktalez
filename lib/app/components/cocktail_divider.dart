@@ -11,12 +11,11 @@ import '../../constants/assets.dart';
 
 class CocktailDivider extends StatelessWidget {
   const CocktailDivider(
-      {Key? key,
+      {super.key,
       required this.isExpanded,
       this.duration,
       this.linesColor,
-      this.compassColor})
-      : super(key: key);
+      this.compassColor});
   final bool isExpanded;
   final Duration? duration;
   final Color? linesColor;
@@ -59,7 +58,9 @@ class CocktailDivider extends StatelessWidget {
               width: 32,
               child: SvgPicture.asset(
                 SvgPaths.compassFull,
-                color: compassColor ?? AppColors.accent,
+                colorFilter: compassColor != null
+                    ? ColorFilter.mode(compassColor!, BlendMode.srcIn)
+                    : null,
               )),
         ),
         Gap($dimensions.insets.sm),
