@@ -10,7 +10,7 @@ import '../../main.dart';
 import 'app_scroll_behavior.dart';
 
 class CocktaleAppScaffold extends StatelessWidget {
-  const CocktaleAppScaffold({Key? key, required this.child}) : super(key: key);
+  const CocktaleAppScaffold({super.key, required this.child});
   final Widget child;
   static Dimensions get dimensions => _dimensions;
   static Dimensions _dimensions = Dimensions();

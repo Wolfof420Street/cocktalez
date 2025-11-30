@@ -22,12 +22,11 @@ class GlassCard extends StatefulWidget {
   final Drinks drink;
 
   const GlassCard(
-      {Key? key,
+      {super.key,
       required this.drink,
       required this.onTap,
       this.isOpen = false,
-     })
-      : super(key: key);
+     });
 
   @override
   createState() => _GlassCardState();

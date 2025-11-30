@@ -4,16 +4,15 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../constants/app_colors.dart';
 
 class AppPageIndicator extends StatefulWidget {
-  AppPageIndicator({
-    Key? key,
+  const AppPageIndicator({
+    super.key,
     required this.count,
     required this.controller,
     this.onDotPressed,
     this.color,
     this.dotSize,
     String? semanticPageTitle,
-  })  : semanticPageTitle = semanticPageTitle ?? '',
-        super(key: key);
+  })  : semanticPageTitle = semanticPageTitle ?? '';
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;

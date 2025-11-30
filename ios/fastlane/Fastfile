@@ -1,0 +1,34 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    # 1. Setup CI (Create temporary keychain)
+    setup_ci
+
+    # 2. Sync Certificates (Read-Only for CI security)
+    # Ensure 'git_url' matches your PRIVATE Match Repo SSH URL
+    # We use the environment variable MATCH_GIT_URL if set, or you can hardcode it here.
+    # But for a public repo, it's safer to pass it or rely on Matchfile.
+    match(
+      type: "appstore",
+      readonly: is_ci, # CI should not create/revoke certs
+      git_url: ENV["MATCH_GIT_URL"] # Passed from Workflow or set in Matchfile
+    )
+
+    # 3. Build the App
+    # Build Flutter Project explicitly before archiving
+    sh "cd .. && flutter build ios --release --no-codesign --build-number=#{ENV['GITHUB_RUN_NUMBER'] || '1'}"
+
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+    )
+
+    # 4. Upload to TestFlight
+    # Uses API Key from environment variables (ASC_KEY_ID, etc.)
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

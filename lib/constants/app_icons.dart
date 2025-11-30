@@ -1,16 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
 class AppIcon extends StatelessWidget {
-  const AppIcon(this.icon, {Key? key, this.size = 22, this.color}) : super(key: key);
+  const AppIcon(this.icon, {super.key, this.size = 22, this.color});
   final AppIcons icon;
   final double size;
   final Color? color;
 
   @override
+  @override
   Widget build(BuildContext context) {
-    String i = describeEnum(icon).toLowerCase().replaceAll('_', '-');
+    String i = icon.name.toLowerCase().replaceAll('_', '-');
     String path = 'assets/images/_common/icons/icon-$i.png';
     //print(path);
     return SizedBox(
@@ -26,23 +26,23 @@ class AppIcon extends StatelessWidget {
 
 enum AppIcons {
   close,
-  close_large,
+  closeLarge,
   collection,
   download,
   expand,
   fullscreen,
-  fullscreen_exit,
+  fullscreenExit,
   info,
   menu,
-  next_large,
+  nextLarge,
   north,
   prev,
-  reset_location,
+  resetLocation,
   search,
-  share_android,
-  share_ios,
+  shareAndroid,
+  shareIos,
   timeline,
   wallpaper,
-  zoom_in,
-  zoom_out
+  zoomIn,
+  zoomOut
 }

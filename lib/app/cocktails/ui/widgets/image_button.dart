@@ -1,7 +1,7 @@
 part of '../pages/cocktail_details_page.dart';
 
 class _ImageBtn extends StatelessWidget {
-  const _ImageBtn({Key? key, required this.data}) : super(key: key);
+  const _ImageBtn({required this.data});
   final CocktailObject data;
 
   @override
@@ -26,7 +26,8 @@ class _ImageBtn extends StatelessWidget {
                   image: NetworkImage(data.strDrinkThumb),
                   fit: BoxFit.contain,
                   distractor: true,
-                  scale: FullscreenUrlImgViewer.imageScale, // so the image isn't reloaded
+                  width: double.infinity,
+                  height: 300,
                 ),
               ),
             ),

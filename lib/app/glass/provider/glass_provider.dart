@@ -1,18 +1,14 @@
 import 'package:cocktalez/app/cocktails/data/model/cocktail_response.dart';
-import 'package:cocktalez/app/cocktails/data/remote/cocktail_service.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:cocktalez/app/cocktails/data/provider/repository_provider.dart';
+import 'package:cocktalez/app/glass/data/provider/repository_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final glassesProvider = FutureProvider((ref) async {
-  var glasses = await ref.watch(cocktailServiceProvider).getGlasses();
-
-  return glasses;
+final glassesProvider = FutureProvider.autoDispose((ref) async {
+  return await ref.watch(glassRepositoryProvider).getGlasses();
 });
 
-final cocktailByGlassProvider = FutureProvider.family<CocktailResponse, String>(
+final cocktailByGlassProvider = FutureProvider.autoDispose.family<CocktailResponse, String>(
   (ref, glass) async {
-    final cocktailsByGlass =
-        await ref.watch(cocktailServiceProvider).getCocktailsByGlass(glass);
-
-    return cocktailsByGlass;
+    return await ref.watch(cocktailRepositoryProvider).getCocktailsByGlass(glass);
   },
 );

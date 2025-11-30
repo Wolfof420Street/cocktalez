@@ -9,11 +9,11 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.backgroundLight,
     brightness: Brightness.light,
     disabledColor: AppColors.disabled,
-    cardTheme: const CardTheme(
-      color: AppColors.cardLight,
+    cardTheme: const CardThemeData( // Fix 1
+      color: AppColors.cardLight, // Fix 2
     ),
     appBarTheme: AppBarTheme(
-      color: AppColors.backgroundLight,
+      backgroundColor: AppColors.backgroundLight,
       iconTheme: const IconThemeData(
         color: AppColors.textLight,
       ),
@@ -27,13 +27,13 @@ class AppTheme {
     iconTheme: const IconThemeData(
       color: AppColors.iconTint,
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData( // Fix 1
       labelColor: AppColors.primary,
       unselectedLabelColor: AppColors.iconTint,
       indicatorSize: TabBarIndicatorSize.tab,
       indicator: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
-        color: AppColors.primary.withOpacity(0.15),
+        color: AppColors.primary.withAlpha(38), // Fix 3
       ),
       labelStyle: const TextStyle(
         fontSize: 16.0,
@@ -64,7 +64,7 @@ class AppTheme {
         fontSize: 16.0,
       ),
       bodyMedium: TextStyle(
-        color: AppColors.textLight.withOpacity(0.7),
+        color: AppColors.textLight.withAlpha(179), // Fix 3
         fontSize: 14.0,
       ),
       labelLarge: const TextStyle(
@@ -80,11 +80,11 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.backgroundDark,
     brightness: Brightness.dark,
     disabledColor: AppColors.disabled,
-    cardTheme: const CardTheme(
-      color: AppColors.cardDark,
+    cardTheme: const CardThemeData( // Fix 1
+      color: AppColors.cardDark, // Fix 2
     ),
     appBarTheme: const AppBarTheme(
-      color: AppColors.backgroundDark,
+      backgroundColor: AppColors.backgroundDark,
       iconTheme: IconThemeData(
         color: AppColors.textDark,
       ),
@@ -98,13 +98,13 @@ class AppTheme {
     iconTheme: const IconThemeData(
       color: AppColors.iconTint,
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData( // Fix 1
       labelColor: AppColors.primary,
       unselectedLabelColor: AppColors.iconTint,
       indicatorSize: TabBarIndicatorSize.tab,
       indicator: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
-        color: AppColors.primary.withOpacity(0.15),
+        color: AppColors.primary.withAlpha(38), // Fix 3
       ),
       labelStyle: const TextStyle(
         fontSize: 16.0,
@@ -135,7 +135,7 @@ class AppTheme {
         fontSize: 16.0,
       ),
       bodyMedium: TextStyle(
-        color: AppColors.textDark.withOpacity(0.7),
+        color: AppColors.textDark.withAlpha(179), // Fix 3
         fontSize: 14.0,
       ),
       labelLarge: const TextStyle(

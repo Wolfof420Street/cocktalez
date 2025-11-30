@@ -1,15 +1,13 @@
 import 'package:cocktalez/app/cocktails/data/model/glass_response.dart';
-import 'package:cocktalez/app/cocktails/provider/cocktail_provider.dart';
 import 'package:cocktalez/app/components/app_header.dart';
 import 'package:cocktalez/app/glass/ui/widgets/glass_card.dart';
 import 'package:cocktalez/constants/failure.dart';
 import 'package:cocktalez/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lottie/lottie.dart';
 
-import '../../../components/error_widget.dart';
-import '../../../glass/provider/glass_provider.dart';
+import 'package:cocktalez/app/components/async_data_widget.dart';
+import 'package:cocktalez/app/components/loading_indicator.dart';import '../../../glass/provider/glass_provider.dart';
 
 class GlassesPage extends StatefulWidget {
   const GlassesPage({super.key});
@@ -62,44 +60,36 @@ class _GlassesPageState extends State<GlassesPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (ctx, ref, child) {
-      return ref.watch(glassesProvider).map(data: (glassesAsyncValue) {
-        var glasses = glassesAsyncValue.value;
+    return Consumer(builder: (context, ref, child) {
+      return AsyncMapWidget<dynamic, GlassResponse>(
+        provider: glassesProvider,
+        extract: (data) {
+          if (data is Failure) return null;
+          return data as GlassResponse;
+        },
+        data: (glasses) {
+          _glassResponse = glasses;
 
-        if(glasses is Failure) {
-          return Scaffold(body: customErrorWidget(() {
-            return ref.refresh(glassesProvider);
-          }, context: context));
-        } 
-
-        _glassResponse = glasses;
-
-        return  Scaffold(
-          appBar: PreferredSize(
-            preferredSize: $dimensions.sizes.minAppSize,
-            child: const AppHeader(
-              title: 'Glasses',
-              showBackBtn: false)),
-          body: ListView.builder(
-            itemCount: _glassResponse!.drinks.length, 
-            scrollDirection: Axis.vertical,
-            controller: _scrollController,
-            padding: const EdgeInsets.only(bottom: 40, top: 10),
-            itemBuilder: (context, index) => _buildListItem(index),
-            
-          ),
-        );
-      }, loading: (_) {
-        return Scaffold(
-          body: Center(
-            child: Lottie.asset('assets/anim/intro_loading.json'),
-          ),
-        );
-      }, error: (error) {
-        return Scaffold(body: customErrorWidget(() {
-          return ref.refresh(randomCocktailProvider);
-        }, context: context));
-      });
+          return Scaffold(
+            appBar: PreferredSize(
+              preferredSize: $dimensions.sizes.minAppSize,
+              child: const AppHeader(
+                title: 'Glasses',
+                showBackBtn: false,
+              ),
+            ),
+            body: ListView.builder(
+              itemCount: _glassResponse!.drinks.length,
+              scrollDirection: Axis.vertical,
+              controller: _scrollController,
+              padding: const EdgeInsets.only(bottom: 40, top: 10),
+              itemBuilder: (context, index) => _buildListItem(index),
+            ),
+          );
+        },
+        wrapLoadingInScaffold: true,
+        loading: () => const AppLoadingIndicator(),
+      );
     });
   }
 }

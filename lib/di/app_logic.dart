@@ -5,6 +5,7 @@ import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 
 import '../constants/page_route.dart';
 import '../constants/router.dart';
@@ -39,6 +40,9 @@ class AppLogic {
       await DesktopWindow.setMinWindowSize($dimensions.sizes.minAppSize);
     }
 
+    // Preload Lottie animation for loading states
+    // This caches the composition to avoid 50-100ms delays during loading
+    await AssetLottie('assets/anim/intro_loading.json').load();
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
     if (PlatformInfo.isAndroid) {

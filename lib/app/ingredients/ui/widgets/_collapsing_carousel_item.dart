@@ -2,13 +2,11 @@ part of '../pages/ingredients_page.dart';
 
 class _CollapsingCarouselItem extends StatelessWidget {
   const _CollapsingCarouselItem(
-      {Key? key,
-      required this.child,
+      {required this.child,
       required this.indexOffset,
       required this.width,
       required this.onPressed,
-      required this.title})
-      : super(key: key);
+      required this.title});
   final Widget child;
   final int indexOffset;
   final double width;
@@ -48,11 +46,10 @@ class _CollapsingCarouselItem extends StatelessWidget {
 
 class _AnimatedTranslate extends StatelessWidget {
   const _AnimatedTranslate({
-    Key? key,
     required this.duration,
     required this.offset,
     required this.child,
-  }) : super(key: key);
+  });
   final Duration duration;
   final Offset offset;
   final Widget child;
@@ -69,7 +66,7 @@ class _AnimatedTranslate extends StatelessWidget {
 }
 
 class _DoubleBorderImage extends StatelessWidget {
-  const _DoubleBorderImage(this.data, {Key? key}) : super(key: key);
+  const _DoubleBorderImage(this.data);
   final Drinks data;
   @override
   Widget build(BuildContext context) => Container(

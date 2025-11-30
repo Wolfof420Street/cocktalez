@@ -2,8 +2,7 @@ part of '../pages/search_cocktail_page.dart';
 
 
 class _SearchTile extends StatelessWidget {
-  const _SearchTile({Key? key, required this.onPressed, required this.data})
-      : super(key: key);
+  const _SearchTile({required this.onPressed, required this.data});
 
   final void Function(Drinks data) onPressed;
   final Drinks data;

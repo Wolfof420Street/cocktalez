@@ -2,7 +2,7 @@ part of '../pages/cocktails_by_ingridient_page.dart';
 
 
 class _ResultTile extends StatelessWidget {
-  const _ResultTile({Key? key, required this.onPressed, required this.data}) : super(key: key);
+  const _ResultTile({required this.onPressed, required this.data});
 
   final void Function(Drinks data) onPressed;
   final Drinks data;

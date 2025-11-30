@@ -19,7 +19,7 @@ class FluidFillIcon extends StatelessWidget {
 
   final double _scaleY;
 
-  FluidFillIcon(FluidFillIconData iconData, double fillAmount, double scaleY)
+  const FluidFillIcon(FluidFillIconData iconData, double fillAmount, double scaleY, {super.key})
       : _iconData = iconData, _fillAmount = fillAmount, _scaleY = scaleY;
 
   @override
@@ -32,9 +32,9 @@ class FluidFillIcon extends StatelessWidget {
 
 class _FluidFillIconPainter extends CustomPainter {
 
-  List<ui.Path> _paths;
-  double _fillAmount;
-  double _scaleY;
+  final List<ui.Path> _paths;
+  final double _fillAmount;
+  final double _scaleY;
 
   _FluidFillIconPainter(List<ui.Path> paths, double fillAmount, double scaleY)
       : _paths = paths, _fillAmount = fillAmount, _scaleY = scaleY;

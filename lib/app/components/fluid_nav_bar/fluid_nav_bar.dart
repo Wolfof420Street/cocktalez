@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 
 import 'curves.dart';
 
-typedef void FluidNavBarChangeCallback(int selectedIndex);
+typedef FluidNavBarChangeCallback = void Function(int selectedIndex);
 
 class FluidNavBar extends StatefulWidget {
 
   static const double nominalHeight = 56.0;
 
   final FluidNavBarChangeCallback onChange;
+  final List<FluidFillIconData> icons;
 
-  FluidNavBar({ required this.onChange });
+  const FluidNavBar({super.key, required this.onChange, required this.icons})
+      : assert(icons.length > 0);
 
   @override
   State createState() => _FluidNavBarState();
@@ -64,7 +66,7 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
     // Build a stack with the buttons overlayed on top of the background pane
     final appSize = MediaQuery.of(context).size;
     const height = FluidNavBar.nominalHeight;
-    return Container(
+    return SizedBox(
       width: appSize.width,
       height: FluidNavBar.nominalHeight,
       child: Stack(
@@ -102,27 +104,21 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
           begin: Curves.easeInExpo.transform(_yController.value),
           end: inCurve.transform(_yController.value),
         ).transform(_yController.velocity.sign * 0.5 + 0.5),
-        Theme.of(context).textTheme.labelLarge!.color!.withOpacity(0.12),
+        Theme.of(context).textTheme.labelLarge!.color!.withAlpha((0.12 * 255).toInt()),
       ),
     );
   }
 
   List<FluidNavBarButton> _buildButtons() {
-    List<FluidFillIconData> icons = [
-      FluidFillIcons.home,
-      FluidFillIcons.window,
-      FluidFillIcons.glasses,
-    ];
- var buttons = List<FluidNavBarButton>.generate(
-  3,
-  (index) => FluidNavBarButton(
-    icons[index],
-    _selectedIndex == index,
-    () => _handlePressed(index),
-  ),
-);
-return buttons;
-
+    var buttons = List<FluidNavBarButton>.generate(
+      widget.icons.length,
+      (index) => FluidNavBarButton(
+        widget.icons[index],
+        _selectedIndex == index,
+        () => _handlePressed(index),
+      ),
+    );
+    return buttons;
   }
 
   double _getButtonContainerWidth() {
@@ -136,7 +132,7 @@ return buttons;
   double _indexToPosition(int index) {
     // Calculate button positions based off of their
     // index (works with `MainAxisAlignment.spaceAround`)
-    const buttonCount = 3.0;
+    final buttonCount = widget.icons.length.toDouble();
     final appWidth = MediaQuery.of(context).size.width;
     final buttonsWidth = _getButtonContainerWidth();
     final startX = (appWidth - buttonsWidth) / 2;
@@ -146,8 +142,9 @@ return buttons;
   }
 
   void _handlePressed(int index) {
-    if (_selectedIndex == index || _xController.isAnimating)
+    if (_selectedIndex == index || _xController.isAnimating) {
       return;
+    }
 
     setState(() {
       _selectedIndex = index;

@@ -1,6 +1,9 @@
 import 'package:cocktalez/app/cocktails/ui/pages/cocktails_page.dart';
 import 'package:cocktalez/app/cocktails/ui/pages/glasses_page.dart';
-import 'package:cocktalez/app/components/fluid_nav_bar/fluid_nav_bar.dart';
+import 'package:cocktalez/app/components/adaptive/adaptive_nav_item.dart';
+import 'package:cocktalez/app/components/adaptive/adaptive_root_scaffold.dart';
+import 'package:cocktalez/app/components/fluid_nav_bar/fluid_icon_data.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../ingredients/ui/pages/ingredients_page.dart';
@@ -13,45 +16,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
 
-  late Widget _child;
-
-
-  @override
-  void initState() {
-    super.initState();
-    _child = const CocktailsPage();
-  }
-
+  final List<AdaptiveNavItem> _navItems = [
+    AdaptiveNavItem(
+      label: 'Home',
+      icon: CupertinoIcons.home,
+      fluidIcon: FluidFillIcons.home,
+      screen: const CocktailsPage(),
+    ),
+    AdaptiveNavItem(
+      label: 'Feed',
+      icon: CupertinoIcons.square_grid_2x2,
+      fluidIcon: FluidFillIcons.window,
+      screen: const IngridientsPage(),
+    ),
+    AdaptiveNavItem(
+      label: 'Cocktails',
+      icon: Icons.local_bar,
+      fluidIcon: FluidFillIcons.glasses,
+      screen: const GlassesPage(),
+    ),
+  ];
 
   void _handleNavigationChange(int index) {
     setState(() {
-      switch (index) {
-        case 0:
-          _child = const CocktailsPage();
-          break;
-        case 1:
-          _child = const IngridientsPage();
-          break;
-        case 2:
-          _child = const GlassesPage();
-          break;
-      }
-      _child = AnimatedSwitcher(
-        switchInCurve: Curves.easeOut,
-        switchOutCurve: Curves.easeIn,
-        duration: const Duration(milliseconds: 500),
-        child: _child,);
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        extendBody: true,
-        body: _child,
-        bottomNavigationBar: FluidNavBar(onChange: _handleNavigationChange),
+    return AdaptiveRootScaffold(
+      items: _navItems,
+      currentIndex: _currentIndex,
+      onTabSelected: _handleNavigationChange,
     );
   }
 }
